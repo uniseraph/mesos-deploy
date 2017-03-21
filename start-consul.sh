@@ -17,4 +17,4 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm \
         -w $(pwd)  docker/compose:1.9.0 \
         -f compose/consul.yml \
         -p consul \
-        up -d server mesos-consul
+        up -d $*

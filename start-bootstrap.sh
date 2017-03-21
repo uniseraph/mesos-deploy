@@ -17,3 +17,6 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
         -f compose/node-compose.yml \
         -p bootstrap \
         up -d $*
+
+
+

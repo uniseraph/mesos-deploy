@@ -1,0 +1,53 @@
+version: '2'
+services:
+  slave:
+    image: mesosphere/mesos-slave:1.1.1-rc2
+    network_mode: host
+    privileged: true
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - slave-log:/var/log/mesos
+      - slave-tmp:/var/tmp/mesos
+      - /usr/bin/docker:/usr/bin/docker
+      - /cgroup:/cgroup
+    environment:
+      - "affinity:container!=*slave*"
+      -  MESOS_PORT=5051
+      -  MESOS_MASTER=${ZK_URL}/mesos
+      -  MESOS_SWITCH_USER=0
+      -  MESOS_CONTAINERIZERS=docker,mesos
+      -  MESOS_LOG_DIR=/var/log/mesos
+      -  MESOS_WORK_DIR=/var/tmp/mesos
+      -  MESOS_HOSTNAME=${HOST_IP}
+      -  MESOS_IP=${HOST_IP}
+  master:
+      image: mesosphere/mesos-master:1.1.1-rc2
+      network_mode: host
+      restart: always
+      volumes:
+       - master-log:/var/log/mesos
+       - master-tmp:/var/tmp/mesos
+      environment:
+       - MESOS_HOSTNAME=${HOST_IP}
+       - MESOS_IP=${HOST_IP}
+       - MESOS_PORT=5050
+       - MESOS_ZK=${ZK_URL}/mesos
+       - MESOS_QUORUM=1
+       - MESOS_REGISTRY=in_memory
+       - MESOS_LOG_DIR=/var/log/mesos
+       - MESOS_WORK_DIR=/var/tmp/mesos
+       - "affinity:container!=*master*"
+  marathon:
+      image: mesosphere/marathon:v1.4.1
+#      network_mode: host
+      ports:
+       - 8080:8080
+      restart: always
+      entrypoint: ./bin/start --master ${ZK_URL}/mesos --zk ${ZK_URL}/marathon
+volumes:
+  slave-log:
+  slave-tmp:
+  master-log:
+  master-tmp:

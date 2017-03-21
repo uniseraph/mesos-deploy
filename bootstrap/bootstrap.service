@@ -1,20 +1,35 @@
 [Unit]
 Description=Docker Application Container Engine
-Documentation=https://docs.docker.com
-After=network.target bootstrap.socket
-Requires=bootstrap.socket
+Documentation=http://docs.docker.com
+After=network.target
+Requires=docker-cleanup.timer
 
 [Service]
 Type=notify
-EnvironmentFile=-/etc/default/bootstrap
-ExecStart=/usr/bin/docker daemon -H unix:///var/run/docker-bootstrap.sock -s overlay  -p /var/run/docker-bootstrap.pid  --iptables=false --ip-masq=false --bridge=none --graph=/var/lib/docker-bootstrap --exec-root=/var/run/docker-bootstrap  $BOOTSTRAP_OPTS
-KillMode=process
-MountFlags=share
-LimitNOFILE=1048576
-LimitNPROC=1048576
+NotifyAccess=all
+EnvironmentFile=-/etc/sysconfig/bootstrap
+Environment=GOTRACEBACK=crash
+Environment=DOCKER_HTTP_HOST_COMPAT=1
+Environment=PATH=/usr/libexec/docker:/usr/bin:/usr/sbin
+ExecStart=/usr/bin/dockerd-current -H unix:///var/run/bootstrap.sock \
+          --add-runtime docker-runc=/usr/libexec/docker/docker-runc-current \
+          --default-runtime=docker-runc \
+          --exec-opt native.cgroupdriver=systemd \
+          --userland-proxy-path=/usr/libexec/docker/docker-proxy-current \
+          -p /var/run/bootstrap.pid  \
+          --iptables=false \
+          --ip-masq=false \
+          --bridge=none \
+          --graph=/var/lib/bootstrap \
+          --exec-root=/var/run/bootstrap  \
+          $BOOTSTRAP_OPTS
+ExecReload=/bin/kill -s HUP $MAINPID
+LimitNOFILE=10485760
+LimitNPROC=10485760
 LimitCORE=infinity
 TimeoutStartSec=0
-Delegate=yes
+Restart=on-abnormal
+MountFlags=slave
 
 [Install]
 WantedBy=multi-user.target

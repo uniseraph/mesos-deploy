@@ -18,13 +18,15 @@ HOST_IP=${HOST_IP:-$LOCAL_IP}
 ZK_URL=${ZK_URL:-"zk://${HOST_IP}:2181/default"}
 
 
+systemctl stop docker
+
 echo '# /etc/sysconfig/docker-network'  > /etc/sysconfig/docker-network
-echo "DOCKER_NETWORK_OPTIONS=\" --dns ${LOCAL_IP} --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}\""  >> /etc/sysconfig/docker-network
+echo "DOCKER_NETWORK_OPTIONS=\" --dns ${LOCAL_IP} --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}  --registry-mirror=https://rmw18jx4.mirror.aliyuncs.com  \""  >> /etc/sysconfig/docker-network
 
 
 echo 'STORAGE_DRIVER=devicemapper' > /etc/sysconfig/docker-storage-setup
+echo 'DOCKER_STORAGE_OPTIONS="-s devicemapper"' > /etc/sysconfig/docker-storage
 
-systemctl stop docker
 systemctl start docker
 systemctl status docker -l
 
@@ -53,4 +55,4 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm \
         -w $(pwd)  docker/compose:1.9.0 \
         -f compose/consul.yml \
         -p consul \
-        up -d
+        up -d server mesos-consul

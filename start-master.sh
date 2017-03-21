@@ -13,7 +13,7 @@ done
 source /run/flannel/subnet.env
 
 echo '# /etc/sysconfig/docker-network'  > /etc/sysconfig/docker-network
-echo 'DOCKER_NETWORK_OPTIONS=\"--bip=${FLANNEL_SUBNET} --mut=${FLANNEL_MTU}\"'  >> /etc/sysconfig/docker-network
+echo "DOCKER_NETWORK_OPTIONS=\"--bip=${FLANNEL_SUBNET} --mut=${FLANNEL_MTU}\""  >> /etc/sysconfig/docker-network
 
 
 echo 'STORAGE_DRIVER=devicemapper' > /etc/sysconfig/docker-storage-setup

@@ -1,0 +1,12 @@
+[Unit]
+Description=Docker Socket for the API
+PartOf=bootstrap.service
+
+[Socket]
+ListenStream=/var/run/docker-bootstrap.sock
+SocketMode=0660
+SocketUser=root
+SocketGroup=root
+
+[Install]
+WantedBy=sockets.target

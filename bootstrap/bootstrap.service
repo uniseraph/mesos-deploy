@@ -1,0 +1,20 @@
+[Unit]
+Description=Docker Application Container Engine
+Documentation=https://docs.docker.com
+After=network.target bootstrap.socket
+Requires=bootstrap.socket
+
+[Service]
+Type=notify
+EnvironmentFile=-/etc/default/bootstrap
+ExecStart=/usr/bin/docker daemon -H unix:///var/run/docker-bootstrap.sock -s overlay  -p /var/run/docker-bootstrap.pid  --iptables=false --ip-masq=false --bridge=none --graph=/var/lib/docker-bootstrap --exec-root=/var/run/docker-bootstrap  $BOOTSTRAP_OPTS
+KillMode=process
+MountFlags=share
+LimitNOFILE=1048576
+LimitNPROC=1048576
+LimitCORE=infinity
+TimeoutStartSec=0
+Delegate=yes
+
+[Install]
+WantedBy=multi-user.target

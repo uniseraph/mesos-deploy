@@ -41,7 +41,7 @@ services:
        - "affinity:container!=*master*"
   marathon:
       image: mesosphere/marathon:v1.4.1
-#      network_mode: host
+      network_mode: bridge
       ports:
        - 8080:8080
       restart: always

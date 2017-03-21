@@ -12,8 +12,14 @@ done
 
 source /run/flannel/subnet.env
 
+LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
+
+HOST_IP=${HOST_IP:-$LOCAL_IP}
+ZK_URL=${ZK_URL:-"zk://${HOST_IP}:2181/default"}
+
+
 echo '# /etc/sysconfig/docker-network'  > /etc/sysconfig/docker-network
-echo "DOCKER_NETWORK_OPTIONS=\"--bip=${FLANNEL_SUBNET} --mut=${FLANNEL_MTU}\""  >> /etc/sysconfig/docker-network
+echo "DOCKER_NETWORK_OPTIONS=\" --dns ${LOCAL_IP} --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}\""  >> /etc/sysconfig/docker-network
 
 
 echo 'STORAGE_DRIVER=devicemapper' > /etc/sysconfig/docker-storage-setup
@@ -22,10 +28,6 @@ systemctl start docker
 systemctl status docker -l
 
 
-LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
-
-HOST_IP=${HOST_IP:-$LOCAL_IP}
-ZK_URL=${ZK_URL:-"zk://${HOST_IP}:2181/default"}
 
 docker -H unix:///var/run/bootstrap.sock run -ti --rm \
         -v $(pwd):$(pwd) \

@@ -1,0 +1,42 @@
+version: '2'
+services:
+ zookeeper:
+  image: zookeeper:3.4.9
+  network_mode: host
+  restart: always
+  volumes:
+    - zk-data:/data
+    - zk-datalog:/datalog
+ flanneld:
+  image: quay.io/coreos/flannel:v0.6.1-amd64
+  network_mode: host
+  restart: always
+  privileged: true
+  volumes:
+   - /dev/net:/dev/net
+   - /run/flannel:/run/flannel
+  environment:
+   - "affinity:container!=*flanneld*"
+  command: /opt/bin/flanneld --etcd-endpoints=${ETCD_URL} --ip-masq=false  --iface=${HOST_IP}
+ etcd:
+  image: gcr.io/google_containers/etcd-amd64:3.0.4
+  network_mode: host
+  restart: always
+  volumes:
+   - etcd-data:/var/etcd/data
+  environment:
+   - "affinity:container!=*etcd*"
+  command: /usr/local/bin/etcd --listen-client-urls=http://0.0.0.0:2379,http://0.0.0.0:4001 --advertise-client-urls=http://localhost:2379,http://localhost:4001 --listen-peer-urls=http://0.0.0.0:2380  --data-dir=/var/etcd/data
+ dnsmasq:
+  image: andyshinn/dnsmasq:2.75
+  network_mode: host
+  cap_add: 
+   - NET_ADMIN
+  restart: always
+  command: -S /consul/127.0.0.1#8600  --log-facility=-
+  environment:
+   - "affinity:container!=*dnsmasq*"
+volumes:
+  etcd-data:
+  zk-data:
+  zk-datalog:

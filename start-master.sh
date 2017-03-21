@@ -24,6 +24,7 @@ echo "DOCKER_NETWORK_OPTIONS=\" --dns ${LOCAL_IP} --bip=${FLANNEL_SUBNET} --mtu=
 
 echo 'STORAGE_DRIVER=devicemapper' > /etc/sysconfig/docker-storage-setup
 
+systemctl stop docker
 systemctl start docker
 systemctl status docker -l
 
@@ -50,6 +51,6 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm \
         -e LOCAL_IP=${LOCAL_IP} \
         -e ZK_URL=${ZK_URL} \
         -w $(pwd)  docker/compose:1.9.0 \
-        -f compose/mesos.yml \
+        -f compose/consul.yml \
         -p consul \
         up -d

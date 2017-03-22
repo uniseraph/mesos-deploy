@@ -21,7 +21,7 @@ ZK_URL=${ZK_URL:-"zk://${HOST_IP}:2181/default"}
 systemctl stop docker
 
 echo '# /etc/sysconfig/docker-network'  > /etc/sysconfig/docker-network
-echo "DOCKER_NETWORK_OPTIONS=\" --dns ${LOCAL_IP} --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}  --registry-mirror=https://rmw18jx4.mirror.aliyuncs.com  \""  >> /etc/sysconfig/docker-network
+echo "DOCKER_NETWORK_OPTIONS=\" --dns ${LOCAL_IP}  --ip-masq=${FLANNEL_IPMASQ}  --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}  --registry-mirror=https://rmw18jx4.mirror.aliyuncs.com  \""  >> /etc/sysconfig/docker-network
 
 
 echo 'STORAGE_DRIVER=devicemapper' > /etc/sysconfig/docker-storage-setup

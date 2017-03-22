@@ -17,7 +17,7 @@ services:
    - /run/flannel:/run/flannel
   environment:
    - "affinity:container!=*flanneld*"
-  command: /opt/bin/flanneld --etcd-endpoints=${ETCD_URL} --ip-masq=true  --iface=${LOCAL_IP}
+  command: /opt/bin/flanneld --etcd-endpoints=${ETCD_URL} --ip-masq=false  --iface=${LOCAL_IP}
  etcd:
   image: gcr.io/google_containers/etcd-amd64:3.0.4
   network_mode: host

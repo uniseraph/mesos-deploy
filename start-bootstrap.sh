@@ -19,4 +19,7 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
         up -d $*
 
 
-
+  if [[ "${HOST_IP}" == "${LOCAL_IP}" ]]; then
+    curl -sSL http://localhost:2379/v2/keys/coreos.com/network/config -XPUT \
+      -d value="{ \"Network\": \"192.168.0.0/16\", \"Backend\": {\"Type\": \"vxlan\"}}"
+  fi

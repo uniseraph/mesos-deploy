@@ -33,7 +33,7 @@ services:
   cap_add: 
    - NET_ADMIN
   restart: always
-  command: -S /consul/127.0.0.1#8600  --log-facility=-
+  command: -S /consul/${LOCAL_IP}#8600  --log-facility=-
   environment:
    - "affinity:container!=*dnsmasq*"
 volumes:

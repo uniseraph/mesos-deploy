@@ -38,6 +38,7 @@ cd /opt/mesos-deploy && bash setup-master.sh
 
 ## 初始化 worker相关服务
 ```
+export HOST_IP=xxxx  
 cd /opt/mesos-deploy && bash setup-worker.sh
 
 ```

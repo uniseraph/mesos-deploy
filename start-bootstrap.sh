@@ -22,7 +22,7 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
   SECONDS=0
   while [[ $(curl -fsSL ${ETCD_URL}/health 2>&1 1>/dev/null; echo $?) != 0 ]]; do
     ((SECONDS++))
-    if [[ ${SECONDS} == ${TIMEOUT_FOR_SERVICES} ]]; then
+    if [[ ${SECONDS} == 10 ]]; then
       echo "etcd failed to start. Exiting..."
       exit 1
     fi

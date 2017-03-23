@@ -13,6 +13,7 @@ Here's a diagram of what the final result will look like:
 
 在阿里云上创建两个centos7u2的虚拟机，其中一台是master兼作worker，另一台是worker。
 
+建议是海外节点，否则需要自己解决翻墙问题。
 
 ### 准备工作
 

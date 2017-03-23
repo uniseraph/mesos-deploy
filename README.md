@@ -23,22 +23,21 @@ yum install -y git && cd /opt && git clone https://github.com/uniseraph/mesos-de
 
 ```
 
-## 初始化节点
-
-```
-cd /opt/mesos-deploy && bash init-node.sh
-
-```
-
 
 ## 初始化 master 相关服务
-
-
-### 
 ```
-export HOST_IP=xxxxx
+cd /opt/mesos-deploy && bash setup-master.sh
 
 ```
 
 
-## 初始化mesos slave 相关服务
+
+
+
+
+
+## 初始化 worker相关服务
+```
+cd /opt/mesos-deploy && bash setup-worker.sh
+
+```

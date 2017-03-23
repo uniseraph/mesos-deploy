@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-yum install -y docker jq
+yum install -y docker jq bind-utils bridge-utils tcpdump
 
 
 cp -f systemd/bootstrap/bootstrap.service /etc/systemd/system/

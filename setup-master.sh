@@ -5,7 +5,7 @@ bash -x init-node.sh  && \
     bash -x start-bootstrap.sh  etcd zookeeper dnsmasq flanneld  && \
     bash -x start-docker.sh && \
     bash -x start-mesos.sh && \
-    bash start-consul server mesos-consul
+    bash -x start-consul.sh server mesos-consul
 
 
 
@@ -21,4 +21,4 @@ bash -x init-node.sh  && \
   done
 
 
-echo "marathon starting success ......, Please access http://${HOST_IP}:8080"
+echo "marathon starting success ......, Please access http://${LOCAL_IP}:8080"

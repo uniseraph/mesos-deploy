@@ -18,3 +18,6 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm \
         -f compose/mesos.yml \
         -p mesos \
         up -d $*
+
+
+

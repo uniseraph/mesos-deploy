@@ -14,7 +14,7 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
         -e LOCAL_IP=${LOCAL_IP} \
         -e ETCD_URL=${ETCD_URL} \
         -w $(pwd)  docker/compose:1.9.0 \
-        -f compose/node-compose.yml \
+        -f compose/bootstrap.yml \
         -p bootstrap \
         up -d $*
 

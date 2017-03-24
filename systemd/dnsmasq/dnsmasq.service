@@ -1,0 +1,9 @@
+[Unit]
+Description=DNS caching server.
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/dnsmasq -k -S /consul/127.0.0.1#8600  --log-facility=-
+
+[Install]
+WantedBy=multi-user.target

@@ -4,7 +4,7 @@ services:
     image: consul:0.7.5
     network_mode: host
     restart: always
-    command: consul agent -server --data-dir=/consul/data -bootstrap-expect=1  -ui -client=0.0.0.0 -advertise=${LOCAL_IP}
+    command: consul agent -server --data-dir=/consul/data -bootstrap-expect=${BOOTSTRAP_EXPECT}  -ui -client=0.0.0.0 -advertise=${LOCAL_IP}
     volumes:
       - server-data:/consul/data
   agent:

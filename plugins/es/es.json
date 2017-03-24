@@ -1,5 +1,5 @@
 {
-  "id": "/elasticsearch",
+  "id": "/es",
   "cmd": null,
   "cpus": 0.2,
   "mem": 512,
@@ -12,13 +12,18 @@
     "type": "DOCKER",
     "volumes": [],
     "docker": {
-      "image": "mesos/elasticsearch-scheduler",
+      "image": "registry.cn-hangzhou.aliyuncs.com/omega-reg/elasticsearch:5.2.2",
       "network": "BRIDGE",
       "portMappings": [
         {
-          "containerPort": 31100,
-          "hostPort": 0,
-          "servicePort": 10005,
+          "containerPort": 9200,
+          "hostPort": 9200,
+          "protocol": "tcp",
+          "labels": {}
+        },
+        {
+          "containerPort": 9300,
+          "hostPort": 9300,
           "protocol": "tcp",
           "labels": {}
         }
@@ -29,18 +34,11 @@
     }
   },
   "env": {
-    "JAVA_OPTS": "-Xms128m -Xmx256m"
+    "ES_JAVA_OPTS": "-Xmx256m -Xms256m",
+    "xpack.security.enabled": "false",
+    "xpack.monitoring.enabled": "false",
+    "xpack.graph.enabled": "false",
+    "xpack.watcher.enabled": "false"
   },
-  "portDefinitions": [
-    {
-      "port": 10005,
-      "protocol": "tcp",
-      "name": "default",
-      "labels": {}
-    }
-  ],
-  "args": [
-    "--zookeeperMesosUrl",
-    "zk://mesos.service.consul:2181/mesos"
-  ]
+   "args": []
 }

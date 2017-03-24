@@ -2,3 +2,17 @@ version: '2'
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.2.2
+    restart: always
+    network_mode: host
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      # disable X-Pack
+      # see https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
+      #     https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
+      xpack.security.enabled: "false"
+      xpack.monitoring.enabled: "false"
+      xpack.graph.enabled: "false"
+      xpack.watcher.enabled: "false"

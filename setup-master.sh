@@ -11,7 +11,7 @@ bash -x init-node.sh  && \
 
 
   SECONDS=0
-  while [[ $(curl -fsSL http://${LOCAL_IP}:8080 2>&1 1>/dev/null; echo $?) != 0 ]]; do
+  while [[ $(curl -fsSL http://localhost:8080 2>&1 1>/dev/null; echo $?) != 0 ]]; do
     ((SECONDS++))
     if [[ ${SECONDS} == 600 ]]; then
       echo "marathon failed to start. Exiting..."
@@ -20,5 +20,6 @@ bash -x init-node.sh  && \
     sleep 1
   done
 
+LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
 
 echo "marathon starting success ......, Please access http://${LOCAL_IP}:8080"

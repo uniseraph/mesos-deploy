@@ -19,6 +19,9 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
         up -d $*
 
 
+
+
+if [[ "${HOST_IP}" == "${LOCAL_IP}" ]]; then
   SECONDS=0
   while [[ $(curl -fsSL ${ETCD_URL}/health 2>&1 1>/dev/null; echo $?) != 0 ]]; do
     ((SECONDS++))
@@ -29,7 +32,6 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
     sleep 1
   done
 
-  if [[ "${HOST_IP}" == "${LOCAL_IP}" ]]; then
-    curl -sSL ${ETCD_URL}/v2/keys/coreos.com/network/config -XPUT \
+  curl -sSL ${ETCD_URL}/v2/keys/coreos.com/network/config -XPUT \
       -d value="{ \"Network\": \"192.168.0.0/16\", \"Backend\": {\"Type\": \"vxlan\"}}"
-  fi
+fi

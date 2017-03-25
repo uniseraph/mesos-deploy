@@ -6,7 +6,7 @@ LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
 HOST_IP=${HOST_IP:-$LOCAL_IP}
 ZK_URL=${ZK_URL:-"zk://${HOST_IP}:2181"}
 
-BOOTSTRAP_EXPECT=${BOOTSTRAP_EXPECT:1}
+BOOTSTRAP_EXPECT=${BOOTSTRAP_EXPECT:-1}
 
 docker -H unix:///var/run/bootstrap.sock run -ti --rm \
         -v $(pwd):$(pwd) \

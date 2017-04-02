@@ -3,7 +3,7 @@
 SECONDS=0
 while [[ ! -f /run/flannel/subnet.env ]]; do
   ((SECONDS++))
-  if [[ ${SECONDS} == 10 ]]; then
+  if [[ ${SECONDS} == 999 ]]; then
     echo "flannel failed to start. Exiting..."
     exit 1
   fi

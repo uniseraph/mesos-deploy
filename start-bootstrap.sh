@@ -10,19 +10,19 @@ ETCD_NAME="etcd0"
 
 if [[ "${LOCAL_IP}" == "${MASTER0_IP}" ]]; then
     ETCD_NAME="etcd0"
-    ZOO_MY_ID="1"
+    ZOO_MY_ID=1
 fi
 
 
 if [[ "${LOCAL_IP}" == "${MASTER1_IP}" ]]; then
     ETCD_NAME="etcd1"
-    ZOO_MY_ID="2"
+    ZOO_MY_ID=2
 fi
 
 
 if [[ "${LOCAL_IP}" == "${MASTER2_IP}" ]]; then
     ETCD_NAME="etcd2"
-    ZOO_MY_ID="3"
+    ZOO_MY_ID=3
 fi
 
 
@@ -36,6 +36,7 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
         -e MASTER2_IP=${MASTER2_IP} \
         -e MASTER0_IP=${MASTER0_IP} \
         -e ZOO_MY_ID=${ZOO_MY_ID} \
+        -e ETCD_NAME=${ETCD_NAME} \
         -w $(pwd)  \
         docker/compose:1.9.0 \
         -f compose/bootstrap.yml \

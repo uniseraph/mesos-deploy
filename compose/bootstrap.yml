@@ -29,7 +29,7 @@ services:
    - etcd-data:/var/etcd/data
   environment:
    - "affinity:container!=*etcd*"
-   - ETCD_INITIAL_CLUSTER="etcd0=http://${MASTER0_IP}:2380,etcd1=http://${MASTER1_IP}:2380,etcd2=http://${MASTER2_IP}:2380"
+   #- ETCD_INITIAL_CLUSTER="etcd0=http://${MASTER0_IP}:2380,etcd1=http://${MASTER1_IP}:2380,etcd2=http://${MASTER2_IP}:2380"
    - ETCD_INITIAL_CLUSTER_STATE=new
    - ETCD_INITIAL_CLUSTER_TOKEN=my-token
    - ETCD_NAME=${ETCD_NAME}
@@ -37,7 +37,7 @@ services:
    - ETCD_LISTEN_PEER_URLS=http://${LOCAL_IP}:2380
    - ETCD_LISTEN_CLIENT_URLS=http://${LOCAL_IP}:2379,http://127.0.0.1:2379
    - ETCD_ADVERTISE_CLIENT_URLS=http://${LOCAL_IP}:2379
-  command: /usr/local/bin/etcd 
+  command: /usr/local/bin/etcd   --initial-cluster etcd0=http://${MASTER0_IP}:2380,etcd1=http://${MASTER1_IP}:2380,etcd2=http://${MASTER2_IP}:2380
  dnsmasq:
   image: andyshinn/dnsmasq:2.75
   network_mode: host

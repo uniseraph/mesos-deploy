@@ -4,6 +4,9 @@ services:
   image: zookeeper:3.4.9
   network_mode: host
   restart: always
+  environment:
+    - ZOO_MY_ID: ${ZOO_MY_ID}
+    - ZOO_SERVERS: server.1=${MASTER0_IP}:2888:3888 server.2=${MASTER1_IP}:2888:3888 server.3=${MASTER2_IP}:2888:3888
   volumes:
     - zk-data:/data
     - zk-datalog:/datalog
@@ -17,7 +20,7 @@ services:
    - /run/flannel:/run/flannel
   environment:
    - "affinity:container!=*flanneld*"
-  command: /opt/bin/flanneld --etcd-endpoints=${ETCD_URL} --ip-masq=false  --iface=${LOCAL_IP}
+  command: /opt/bin/flanneld --etcd-endpoints=http://${MASTER0_IP}:2379,http://${MASTER1_IP}:2379,http://${MASTER2_IP}:2379 --ip-masq=false  --iface=${LOCAL_IP}
  etcd:
   image: registry.cn-hangzhou.aliyuncs.com/omega-reg/etcd:3.0.4
   network_mode: host
@@ -26,7 +29,9 @@ services:
    - etcd-data:/var/etcd/data
   environment:
    - "affinity:container!=*etcd*"
-  command: /usr/local/bin/etcd --listen-client-urls=http://0.0.0.0:2379,http://0.0.0.0:4001 --advertise-client-urls=http://localhost:2379,http://localhost:4001 --listen-peer-urls=http://0.0.0.0:2380  --data-dir=/var/etcd/data
+   - ETCD_INITIAL_CLUSTER="etcd0=http://${MASTER0_IP}:2380,etcd1=http://${MASTER1_IP}:2380,etcd2=http://${MASTER2_IP}:2380"
+   - ETCD_INITIAL_CLUSTER_STATE=new
+  command: /usr/local/bin/etcd --name=${ETCD_NAME} -initial-advertise-peer-urls=http://${LOCAL_IP}:2380 -listen-peer-urls=http://${LOCAL_IP}:2380   -listen-client-urls http://${LOCAL_IP}:2379,http://127.0.0.1:2379  -advertise-client-urls=http://${LOCAL_IP}:2379
  dnsmasq:
   image: andyshinn/dnsmasq:2.75
   network_mode: host
@@ -40,3 +45,9 @@ volumes:
   etcd-data:
   zk-data:
   zk-datalog:
+  -initial-advertise-peer-urls http://10.0.1.11:2380 \
+    -listen-peer-urls http://10.0.1.11:2380 \
+    -listen-client-urls http://10.0.1.11:2379,http://127.0.0.1:2379 \
+    -advertise-client-urls http://10.0.1.11:2379 \
+ETCD_INITIAL_CLUSTER="etcd0=http://10.0.1.10:2380,etcd1=http://10.0.1.11:2380,etcd2=http://10.0.1.12:2380"
+ETCD_INITIAL_CLUSTER_STATE=new

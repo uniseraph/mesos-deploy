@@ -6,7 +6,7 @@ services:
   restart: always
   environment:
     - MY_ID=${ZOO_MY_ID}
-    - SERVERS={MASTER0_IP},${MASTER1_IP},${MASTER2_IP}
+    - SERVERS=${MASTER0_IP},${MASTER1_IP},${MASTER2_IP}
   volumes:
     - zk-data:/data
     - zk-datalog:/datalog

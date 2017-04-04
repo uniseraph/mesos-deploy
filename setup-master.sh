@@ -31,7 +31,11 @@ bash -x init-node.sh  && \
   SECONDS=0
   while [[ $(curl -fsSL http://localhost:8080 2>&1 1>/dev/null; echo $?) != 0 ]]; do
     ((SECONDS++))
-    if [[ ${SECONDS} == 600 ]]; then
+    if [[ ${SECONDS} ==
+
+
+
+     ]]; then
       echo "marathon failed to start. Exiting..."
       exit 1
     fi

@@ -1,12 +1,12 @@
 version: '2'
 services:
  zookeeper:
-  image: zookeeper:3.4.9
+  image: mesoscloud/zookeeper:3.4.8-centos-7
   network_mode: host
   restart: always
   environment:
-    - ZOO_MY_ID=${ZOO_MY_ID}
-    - ZOO_SERVERS="server.1=${MASTER0_IP}:2888:3888 server.2=${MASTER1_IP}:2888:3888 server.3=${MASTER2_IP}:2888:3888"
+    - MY_ID=${ZOO_MY_ID}
+    - SERVERS={MASTER0_IP},${MASTER1_IP},${MASTER2_IP}
   volumes:
     - zk-data:/data
     - zk-datalog:/datalog
@@ -31,7 +31,13 @@ services:
    - "affinity:container!=*etcd*"
    - ETCD_INITIAL_CLUSTER="etcd0=http://${MASTER0_IP}:2380,etcd1=http://${MASTER1_IP}:2380,etcd2=http://${MASTER2_IP}:2380"
    - ETCD_INITIAL_CLUSTER_STATE=new
-  command: /usr/local/bin/etcd --name=${ETCD_NAME} -initial-advertise-peer-urls=http://${LOCAL_IP}:2380 -listen-peer-urls=http://${LOCAL_IP}:2380   -listen-client-urls http://${LOCAL_IP}:2379,http://127.0.0.1:2379  -advertise-client-urls=http://${LOCAL_IP}:2379
+   - ETCD_INITIAL_CLUSTER_TOKEN=my-token
+   - ETCD_NAME=${ETCD_NAME}
+   - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://${LOCAL_IP}:2380
+   - ETCD_LISTEN_PEER_URLS=http://${LOCAL_IP}:2380
+   - ETCD_LISTEN_CLIENT_URLS=http://${LOCAL_IP}:2379,http://127.0.0.1:2379
+   - ETCD_ADVERTISE_CLIENT_URLS=http://${LOCAL_IP}:2379
+  command: /usr/local/bin/etcd 
  dnsmasq:
   image: andyshinn/dnsmasq:2.75
   network_mode: host

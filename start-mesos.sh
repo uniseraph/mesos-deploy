@@ -4,8 +4,8 @@
 
 LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
 
-HOST_IP=${HOST_IP:-$LOCAL_IP}
-ZK_URL=${ZK_URL:-"zk://${HOST_IP}:2181"}
+
+ZK_URL=${ZK_URL:-"zk://${MASTER0_IP}:2181,${MASTER1_IP}:2181,${MASTER2_IP}:2181"}
 
 
 docker -H unix:///var/run/bootstrap.sock run -ti --rm \

@@ -22,22 +22,12 @@ fi
 bash -x init-node.sh  && \
     bash -x start-bootstrap.sh  etcd zookeeper dnsmasq flanneld consul-server  && \
     bash -x start-docker.sh && \
-    bash -x start-mesos.sh
+    bash -x start-mesos.sh master slave mesos-consul
     #bash -x start-consul.sh server mesos-consul
 
-
-
-
-  SECONDS=0
-  while [[ $(curl -fsSL http://localhost:8080 2>&1 1>/dev/null; echo $?) != 0 ]]; do
-    ((SECONDS++))
-    if [[ ${SECONDS} == 99 ]]; then
-      echo "marathon failed to start. Exiting..."
-      exit 1
-    fi
-    sleep 1
-  done
-
 LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
+if [[ ${LOCAL_IP} == ${MASTER0_IP} ]]; then
+    bash -x start-mesos.sh marathon
+fi
 
 echo "marathon starting success ......, Please access http://${LOCAL_IP}:8080"

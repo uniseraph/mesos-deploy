@@ -20,10 +20,10 @@ fi
 
 
 bash -x init-node.sh  && \
-    bash -x start-bootstrap.sh  etcd zookeeper dnsmasq flanneld  && \
+    bash -x start-bootstrap.sh  etcd zookeeper dnsmasq flanneld consul-server  && \
     bash -x start-docker.sh && \
-    bash -x start-mesos.sh && \
-    bash -x start-consul.sh server mesos-consul
+    bash -x start-mesos.sh
+    #bash -x start-consul.sh server mesos-consul
 
 
 

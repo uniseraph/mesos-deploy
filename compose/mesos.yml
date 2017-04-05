@@ -46,6 +46,11 @@ services:
        - 8080:8080
       restart: always
       entrypoint: ./bin/start --master ${ZK_URL}/mesos --zk ${ZK_URL}/marathon
+  mesos-consul:
+      image: ciscocloud/mesos-consul:v0.4.0
+      network_mode: host
+      restart: always
+      command: --zk=${ZK_URL}/mesos --consul
 volumes:
   slave-log:
   slave-tmp:

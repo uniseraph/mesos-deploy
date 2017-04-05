@@ -4,7 +4,7 @@ LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
 
 #HOST_IP=${HOST_IP:-$LOCAL_IP}
 
-ETCD_URL=${ETCD_URL:-"http://"${HOST_IP}:2379}
+#ETCD_URL=${ETCD_URL:-"http://"${HOST_IP}:2379}
 
 ETCD_NAME="etcd0"
 
@@ -26,9 +26,13 @@ if [[ "${LOCAL_IP}" == "${MASTER2_IP}" ]]; then
 fi
 
 
+ZK_URL=${ZK_URL:-"zk://${MASTER0_IP}:2181,${MASTER1_IP}:2181,${MASTER2_IP}:2181"}
+BOOTSTRAP_EXPECT=${BOOTSTRAP_EXPECT:-3}
+
+
 
 docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
-	-v /var/run/bootstrap.sock:/var/run/bootstrap.sock \
+	    -v /var/run/bootstrap.sock:/var/run/bootstrap.sock \
         -v /usr/bin/docker:/usr/bin/docker \
         -e DOCKER_HOST=unix:///var/run/bootstrap.sock  \
         -e LOCAL_IP=${LOCAL_IP} \
@@ -37,6 +41,7 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
         -e MASTER0_IP=${MASTER0_IP} \
         -e ZOO_MY_ID=${ZOO_MY_ID} \
         -e ETCD_NAME=${ETCD_NAME} \
+        -e BOOTSTRAP_EXPECT=${BOOTSTRAP_EXPECT} \
         -w $(pwd)  \
         docker/compose:1.9.0 \
         -f compose/bootstrap.yml \

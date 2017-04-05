@@ -45,6 +45,8 @@ services:
       ports:
        - 8080:8080
       restart: always
+      environment:
+       - /usr/bin/curl:/usr/bin/curl
       entrypoint: ./bin/start --master ${ZK_URL}/mesos --zk ${ZK_URL}/marathon
   mesos-consul:
       image: ciscocloud/mesos-consul:v0.4.0

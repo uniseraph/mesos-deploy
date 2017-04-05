@@ -28,7 +28,7 @@ fi
 
 ZK_URL=${ZK_URL:-"zk://${MASTER0_IP}:2181,${MASTER1_IP}:2181,${MASTER2_IP}:2181"}
 BOOTSTRAP_EXPECT=${BOOTSTRAP_EXPECT:-3}
-
+FLANNEL_NETWORK=${FLANNEL_NETWORK:-"192.168.0.0/16"}
 
 
 docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
@@ -63,5 +63,5 @@ if [[ "${LOCAL_IP}" == "${MASTER0_IP}" ]]; then
   done
 
   curl -sSL http://${LOCAL_IP}:2379/v2/keys/coreos.com/network/config -XPUT \
-      -d value="{ \"Network\": \"192.168.0.0/16\", \"Backend\": {\"Type\": \"vxlan\"}}"
+      -d value="{ \"Network\": \"${FLANNEL_NETWORK}\", \"Backend\": {\"Type\": \"vxlan\"}}"
 fi

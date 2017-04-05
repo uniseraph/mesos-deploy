@@ -28,6 +28,6 @@ bash -x init-node.sh  && \
 LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
 if [[ ${LOCAL_IP} == ${MASTER0_IP} ]]; then
     bash -x start-mesos.sh marathon
+    echo "marathon starting success ......, Please access http://${LOCAL_IP}:8080"
 fi
 
-echo "marathon starting success ......, Please access http://${LOCAL_IP}:8080"

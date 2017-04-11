@@ -19,8 +19,15 @@ Here's a diagram of what the final result will look like:
 在所有机器上执行如下命令 ，安装git和mesos-deploy
 
 ```
-yum install -y git && cd /opt && git clone https://github.com/uniseraph/mesos-deploy.git && cd mesos-deploy &&  git checkout 0.2
+yum install -y git && cd /opt && git clone https://github.com/uniseraph/mesos-deploy.git && cd mesos-deploy 
 
+```
+
+### 初始化flannel网络端
+如果是阿里云vpc网络，vm的ip端在192.168.0.0/16，则设置FLANNEL_NETWORK=172.16.0.0/12,否则可以忽略。
+
+```
+export FLANNEL_NETWORK=172.16.0.0/12
 ```
 
 
@@ -50,6 +57,9 @@ cd /opt/mesos-deploy && bash setup-worker.sh
 ```
 
 先指定MASTER_IP ，这样worker可以知道master在那里。
+
+
+
 
 
 ## 

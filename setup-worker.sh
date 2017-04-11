@@ -19,7 +19,7 @@ fi
 
 
 bash -x init-node.sh  && \
-    bash -x start-bootstrap.sh  dnsmasq flanneld  && \
+    bash -x start-bootstrap.sh  dnsmasq flanneld consul-agent  && \
     bash -x start-docker.sh && \
-    bash -x start-mesos.sh  slave && \
-    bash -x start-consul.sh  agent mesos-consul
+    bash -x start-mesos.sh  slave
+    #bash -x start-consul.sh  agent mesos-consul

@@ -47,7 +47,23 @@ services:
   command: -S /consul/${LOCAL_IP}#8600  --log-facility=-
   environment:
    - "affinity:container!=*dnsmasq*"
+ consul-server:
+   image: consul:0.7.5
+   network_mode: host
+   restart: always
+   command: consul agent -server --data-dir=/consul/data -bootstrap-expect=${BOOTSTRAP_EXPECT} -bind=${LOCAL_IP} -ui -client=0.0.0.0 -advertise=${LOCAL_IP} -join=${MASTER0_IP}  -join=${MASTER1_IP} -join=${MASTER2_IP}
+   volumes:
+     - consul-server-data:/consul/data
+ consul-agent:
+   image: consul:0.7.5
+   network_mode: host
+   restart: always
+   command:  consul agent -data-dir=/consul/data -advertise=${LOCAL_IP}  -bind=${LOCAL_IP} -join=${MASTER0_IP}  -join=${MASTER1_IP} -join=${MASTER2_IP} -client=0.0.0.0 -ui
+   volumes:
+      - consul-agent-data:/consul/data
 volumes:
   etcd-data:
   zk-data:
   zk-datalog:
+  consul-server-data:
+  consul-agent-data:

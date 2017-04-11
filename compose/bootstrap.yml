@@ -1,12 +1,12 @@
 version: '2'
 services:
  zookeeper:
-  image: mesoscloud/zookeeper:3.4.8-centos-7
+  image: zookeeper:3.4.10
   network_mode: host
   restart: always
   environment:
-    - MYID=${ZOO_MY_ID}
-    - SERVERS=${MASTER0_IP},${MASTER1_IP},${MASTER2_IP}
+    ZOO_MY_ID: ${ZOO_MY_ID}
+    ZOO_SERVERS: server.1=${MASTER0_IP}:2888:3888 server.2=${MASTER1_IP}:2888:3888 server.3=${MASTER2_IP}:2888:3888
   volumes:
     - zk-data:/data
     - zk-datalog:/datalog

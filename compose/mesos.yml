@@ -34,7 +34,7 @@ services:
        - MESOS_IP=${LOCAL_IP}
        - MESOS_PORT=5050
        - MESOS_ZK=${ZK_URL}/mesos
-       - MESOS_QUORUM=1
+       - MESOS_QUORUM=2
        - MESOS_REGISTRY=in_memory
        - MESOS_LOG_DIR=/var/log/mesos
        - MESOS_WORK_DIR=/var/lib/mesos

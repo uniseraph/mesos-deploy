@@ -19,7 +19,7 @@ services:
       -  MESOS_SWITCH_USER=0
       -  MESOS_CONTAINERIZERS=docker,mesos
       -  MESOS_LOG_DIR=/var/log/mesos
-      -  MESOS_WORK_DIR=/var/tmp/mesos
+      -  MESOS_WORK_DIR=/var/lib/mesos
       -  MESOS_HOSTNAME=${LOCAL_IP}
       -  MESOS_IP=${LOCAL_IP}
   master:
@@ -37,16 +37,14 @@ services:
        - MESOS_QUORUM=1
        - MESOS_REGISTRY=in_memory
        - MESOS_LOG_DIR=/var/log/mesos
-       - MESOS_WORK_DIR=/var/tmp/mesos
+       - MESOS_WORK_DIR=/var/lib/mesos
        - "affinity:container!=*master*"
   marathon:
       image: mesosphere/marathon:v1.4.1
-      network_mode: bridge
-      ports:
-       - 8080:8080
+      network_mode: host
+      extra_hosts:
+        - "${HOSTNAME}:${LOCAL_IP}"
       restart: always
-      environment:
-       - /usr/bin/curl:/usr/bin/curl
       entrypoint: ./bin/start --master ${ZK_URL}/mesos --zk ${ZK_URL}/marathon
   mesos-consul:
       image: ciscocloud/mesos-consul:v0.4.0

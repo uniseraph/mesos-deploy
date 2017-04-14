@@ -2,7 +2,7 @@
 
 echo "net.ipv4.conf.eth0.rp_filter=0" > /etc/sysctl.d/omega.conf
 
-sysctl -p
+sysctl -w net.ipv4.conf.eth0.rp_filter=0
 
 yum install -y docker jq bind-utils bridge-utils tcpdump dnsmasq
 

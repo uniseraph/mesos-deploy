@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "net.ipv4.conf.eth0.rp_filter=0" > /etc/sysconf.d/omega.conf
+echo "net.ipv4.conf.eth0.rp_filter=0" > /etc/sysctl.d/omega.conf
 
 sysctl -p
 

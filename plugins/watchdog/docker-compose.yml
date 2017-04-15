@@ -2,10 +2,13 @@ version: '2'
 
 services:
  watchdog:
-  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/watchdog:0.1
+  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/watchdog:0.1.0
   restart: always
   network_mode: host
+  privileged: true
   pid: host
+  volumes:
+   - /var/run/docker.sock:/var/run/docker.sock
   labels:
    - com.github.omega.labels.system=true
-  command: manage --host ${LOCAL_IP}:2375 ${DIS_URL}
+  command: --log-level=info -H unix:///var/run/docker.sock consul://${LOCAL_IP}:8500

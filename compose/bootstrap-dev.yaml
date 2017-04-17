@@ -1,0 +1,66 @@
+version: '2'
+services:
+ zookeeper:
+  image: zookeeper:3.4.10
+  network_mode: host
+  restart: always
+  volumes:
+    - zk-data:/data
+    - zk-datalog:/datalog
+ flanneld:
+  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/flannel:v0.6.2-amd64
+  network_mode: host
+  restart: always
+  privileged: true
+  volumes:
+   - /dev/net:/dev/net
+   - /run/flannel:/run/flannel
+  environment:
+   - "affinity:container!=*flanneld*"
+  command: /opt/bin/flanneld --etcd-endpoints=http://${MASTER_IP}:2379 --ip-masq=false  --iface=${LOCAL_IP}
+ etcd:
+  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/etcd:3.0.4
+  network_mode: host
+  restart: always
+  volumes:
+   - etcd-data:/var/etcd/data
+  environment:
+   - "affinity:container!=*etcd*"
+   #- ETCD_INITIAL_CLUSTER="etcd0=http://${MASTER0_IP}:2380,etcd1=http://${MASTER1_IP}:2380,etcd2=http://${MASTER2_IP}:2380"
+   #- ETCD_INITIAL_CLUSTER_STATE=new
+   #- ETCD_INITIAL_CLUSTER_TOKEN=my-token
+   #- ETCD_NAME=${ETCD_NAME}
+   #- ETCD_INITIAL_ADVERTISE_PEER_URLS=http://${LOCAL_IP}:2380
+   - ETCD_LISTEN_PEER_URLS=http://${LOCAL_IP}:2380
+   - ETCD_LISTEN_CLIENT_URLS=http://${LOCAL_IP}:2379,http://0.0.0.0:4001
+   - ETCD_ADVERTISE_CLIENT_URLS=http://${LOCAL_IP}:2379,http://localhost:4001
+  command: /usr/local/bin/etcd     --data-dir=/var/etcd/data
+ dnsmasq:
+  image: andyshinn/dnsmasq:2.75
+  network_mode: host
+  cap_add:
+   - NET_ADMIN
+  restart: always
+  command: -S /consul/${LOCAL_IP}#8600  --log-facility=-
+  environment:
+   - "affinity:container!=*dnsmasq*"
+ consul-server:
+   image: consul:0.7.5
+   network_mode: host
+   restart: always
+   command: consul agent -server --data-dir=/consul/data -bootstrap-expect=1 -bind=${LOCAL_IP} -ui -client=0.0.0.0 -advertise=${LOCAL_IP}
+   volumes:
+     - consul-server-data:/consul/data
+ consul-agent:
+   image: consul:0.7.5
+   network_mode: host
+   restart: always
+   command:  consul agent -data-dir=/consul/data -advertise=${LOCAL_IP}  -bind=${LOCAL_IP} -join=${MASTER_IP} -client=0.0.0.0 -ui
+   volumes:
+      - consul-agent-data:/consul/data
+volumes:
+  etcd-data:
+  zk-data:
+  zk-datalog:
+  consul-server-data:
+  consul-agent-data:

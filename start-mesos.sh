@@ -5,7 +5,7 @@
 LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
 
 
-ZK_URL=${ZK_URL:-"zk://${MASTER0_IP}:2181,${MASTER1_IP}:2181,${MASTER2_IP}:2181"}
+ZK_URL=${ZK_URL:-"zk://${MASTER_IP}:2181"}
 
 HOSTNAME=`hostname`
 

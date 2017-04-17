@@ -56,10 +56,64 @@ cd /opt/mesos-deploy && bash setup-worker.sh
 
 ```
 
-先指定MASTER_IP ，这样worker可以知道master在那里。
 
+##  验证
 
+### 创建一个nginx app
 
+```
+curl  -H 'Content-Type: application/json' -d @nginx.json  kvm1:8080/v2/apps
 
-
-## 
+```
+nginx.json内容为
+```
+{
+  "id": "/nginx1",
+  "cmd": null,
+  "cpus": 0.1,
+  "mem": 128,
+  "disk": 0,
+  "instances": 1,
+  "acceptedResourceRoles": [],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [],
+    "docker": {
+      "image": "nginx",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 0,
+          "servicePort": 10000,
+          "protocol": "tcp",
+          "labels": {}
+        }
+      ],
+      "privileged": false,
+      "parameters": [],
+      "forcePullImage": true
+    }
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "portIndex": 0,
+      "path": "/",
+      "protocol": "HTTP",
+      "ignoreHttp1xx": false
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 10000,
+      "protocol": "tcp",
+      "name": "default",
+      "labels": {}
+    }
+  ]
+}
+```

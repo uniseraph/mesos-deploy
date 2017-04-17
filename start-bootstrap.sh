@@ -6,28 +6,13 @@ LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
 
 #ETCD_URL=${ETCD_URL:-"http://"${HOST_IP}:2379}
 
-ETCD_NAME="etcd0"
-
-if [[ "${LOCAL_IP}" == "${MASTER0_IP}" ]]; then
-    ETCD_NAME="etcd0"
-    ZOO_MY_ID=1
-fi
 
 
-if [[ "${LOCAL_IP}" == "${MASTER1_IP}" ]]; then
-    ETCD_NAME="etcd1"
-    ZOO_MY_ID=2
-fi
 
 
-if [[ "${LOCAL_IP}" == "${MASTER2_IP}" ]]; then
-    ETCD_NAME="etcd2"
-    ZOO_MY_ID=3
-fi
 
-
-ZK_URL=${ZK_URL:-"zk://${MASTER0_IP}:2181,${MASTER1_IP}:2181,${MASTER2_IP}:2181"}
-BOOTSTRAP_EXPECT=${BOOTSTRAP_EXPECT:-3}
+ZK_URL=${ZK_URL:-"zk://${MASTER_IP}:2181"}
+BOOTSTRAP_EXPECT=${BOOTSTRAP_EXPECT:-1}
 FLANNEL_NETWORK=${FLANNEL_NETWORK:-"192.168.0.0/16"}
 
 
@@ -36,22 +21,17 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
         -v /usr/bin/docker:/usr/bin/docker \
         -e DOCKER_HOST=unix:///var/run/bootstrap.sock  \
         -e LOCAL_IP=${LOCAL_IP} \
-        -e MASTER1_IP=${MASTER1_IP} \
-        -e MASTER2_IP=${MASTER2_IP} \
-        -e MASTER0_IP=${MASTER0_IP} \
-        -e ZOO_MY_ID=${ZOO_MY_ID} \
-        -e ETCD_NAME=${ETCD_NAME} \
-        -e BOOTSTRAP_EXPECT=${BOOTSTRAP_EXPECT} \
+        -e MASTER_IP=${MASTER_IP} \
         -w $(pwd)  \
         docker/compose:1.9.0 \
-        -f compose/bootstrap.yml \
+        -f compose/bootstrap-dev.yml \
         -p bootstrap \
         up -d $*
 
 
 
 
-if [[ "${LOCAL_IP}" == "${MASTER0_IP}" ]]; then
+if [[ "${LOCAL_IP}" == "${MASTER_IP}" ]]; then
   SECONDS=0
   while [[ $(curl -fsSL http://${LOCAL_IP}:2379/health 2>&1 1>/dev/null; echo $?) != 0 ]]; do
     ((SECONDS++))

@@ -117,3 +117,12 @@ nginx.json内容为
   ]
 }
 ```
+
+
+## TODO
+
+### bridge container ping host
+在阿里云经典网络场景中，阿里云会对vm发出的icmp包进行源mac/源ip校验，所以如果是bridge container ping 宿主机，会通不过校验，导致icmp request被丢弃，所以ping不通。
+
+在经典网络中，marathon只能以host模式启动。
+      

@@ -18,5 +18,4 @@ docker run -ti --rm \
         -e DIS_URL=${DIS_URL} \
         -w ${BASE_DIR} \
         docker/compose:1.9.0 \
-        -p swarm \
         up -d $*

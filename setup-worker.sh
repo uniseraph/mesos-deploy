@@ -1,20 +1,12 @@
 #!/usr/bin/env bash
 
 
-if [[ -z ${MASTER0_IP} ]]; then
+if [[ -z ${MASTER_IP} ]]; then
     echo "Please export MASTER0_IP in your env"
     exit 1
 fi
 
-if [[ -z ${MASTER1_IP} ]]; then
-    echo "Please export MASTER1_IP in your env"
-    exit 1
-fi
 
-if [[ -z ${MASTER2_IP} ]]; then
-    echo "Please export MASTER2_IP in your env"
-    exit 1
-fi
 
 
 TYPE=mesos

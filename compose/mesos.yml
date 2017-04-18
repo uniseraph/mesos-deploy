@@ -38,6 +38,7 @@ services:
        - MESOS_REGISTRY=in_memory
        - MESOS_LOG_DIR=/var/log/mesos
        - MESOS_WORK_DIR=/var/lib/mesos
+       - MESOS_ACLS="{\"permissive\":false}"
        - "affinity:container!=*master*"
   marathon:
       image: mesosphere/marathon:v1.4.1
@@ -45,7 +46,7 @@ services:
       extra_hosts:
         - "${HOSTNAME}:${LOCAL_IP}"
       restart: always
-      entrypoint: ./bin/start --master ${ZK_URL}/mesos --zk ${ZK_URL}/marathon
+      entrypoint: ./bin/start --master ${ZK_URL}/mesos --zk ${ZK_URL}/marathon Shell  --mesos_authentication_principal=marathon --mesos_role=marathon-framework
   mesos-consul:
       image: ciscocloud/mesos-consul:v0.4.0
       network_mode: host

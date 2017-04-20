@@ -63,5 +63,5 @@ if [[ "${LOCAL_IP}" == "${MASTER0_IP}" ]]; then
   done
 
   curl -sSL http://${LOCAL_IP}:2379/v2/keys/coreos.com/network/config -XPUT \
-      -d value="{ \"Network\": \"${FLANNEL_NETWORK}\", \"Backend\": {\"Type\": \"vxlan\"}}"
+      -d value="{ \"Network\": \"${FLANNEL_NETWORK}\",  \"SubnetLen\":25    ,   \"Backend\": {\"Type\": \"vxlan\"}}"
 fi

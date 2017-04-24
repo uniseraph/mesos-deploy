@@ -77,8 +77,9 @@ if [[ ${TYPE} == "mesos" ]]; then
     fi
 elif [[ ${TYPE} == "swarm" ]]; then
 
-    bash -x plugins/swarm/start.sh
     bash -x plugins/watchdog/start.sh
+
+    bash -x plugins/swarm/start.sh  master agent
 else
     echo  "No such cluster type:${TYPE}"
     exit -1

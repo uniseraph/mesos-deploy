@@ -11,7 +11,7 @@ services:
     - zk-data:/data
     - zk-datalog:/datalog
  flanneld:
-  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/flannel:v0.6.2-amd64
+  image: quay.io/coreos/flannel:v0.7.1-amd64
   network_mode: host
   restart: always
   privileged: true

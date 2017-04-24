@@ -70,6 +70,15 @@ elif [[ ${TYPE} == "swarm" ]]; then
 
     bash -x plugins/swarm/start.sh
     bash -x plugins/watchdog/start.sh
+
+    if [[ ${WITH_HDFS} == "true" ]]; then
+
+    fi
+
+    if [[ ${WITH_YARN} == "true" ]]; then
+
+    fi
+
 else
     echo  "No such cluster type:${TYPE}"
     exit -1

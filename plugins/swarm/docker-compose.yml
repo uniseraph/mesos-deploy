@@ -17,11 +17,11 @@ services:
   labels:
    - com.github.omega.labels.system=true
   command: join --addr ${LOCAL_IP}:2376  ${DIS_URL}
- api:
-  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/api:1.0.0
-  restart: always
-  network_mode: host
-  pid: host
-  labels:
-   - com.github.omega.labels.system=true
-  command: /opt/omega/api -l debug start --clusterEndpoint=${LOCAL_IP}:2375 --clusterScheme=http
+# api:
+#  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/api:1.0.0
+#  restart: always
+#  network_mode: host
+#  pid: host
+#  labels:
+#   - com.github.omega.labels.system=true
+#  command: /opt/omega/api -l debug start --clusterEndpoint=${LOCAL_IP}:2375 --clusterScheme=http

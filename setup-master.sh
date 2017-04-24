@@ -74,13 +74,7 @@ elif [[ ${TYPE} == "swarm" ]]; then
     export DIS_URL="consul://127.0.0.1:8500/default"
     bash -x plugins/watchdog/start.sh
 
-    if [[ ${WITH_HDFS} == "true" ]]; then
 
-    fi
-
-    if [[ ${WITH_YARN} == "true" ]]; then
-
-    fi
 
     bash -x plugins/swarm/start.sh  master agent
 

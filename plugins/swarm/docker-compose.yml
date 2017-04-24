@@ -2,7 +2,8 @@ version: '2'
 
 services:
  master:
-  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/swarm:1.2.4
+  #image: registry.cn-hangzhou.aliyuncs.com/omega-reg/swarm:1.2.4
+  image: swarm:1.2.6
   restart: always
   network_mode: host
   pid: host
@@ -10,7 +11,8 @@ services:
    - com.github.omega.labels.system=true
   command: manage --host ${LOCAL_IP}:2375 ${DIS_URL}
  agent:
-  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/swarm:1.2.4
+  image: swarm:1.2.6
+  #image: registry.cn-hangzhou.aliyuncs.com/omega-reg/swarm:1.2.4
   restart: always
   network_mode: host
   pid: host

@@ -62,11 +62,12 @@ echo "WITH_HDFS=${WITH_HDFS}"
 
 
 
-bash -x init-node.sh  && \
-    bash -x start-bootstrap.sh  etcd zookeeper dnsmasq flanneld consul-server  && \
-    bash -x start-docker.sh
+bash -x init-node.sh
 
 if [[ ${TYPE} == "mesos" ]]; then
+
+    bash -x start-bootstrap.sh  etcd zookeeper dnsmasq flanneld consul-server  && \
+    bash -x start-docker.sh
 
     bash -x start-mesos.sh master slave
 
@@ -76,7 +77,10 @@ if [[ ${TYPE} == "mesos" ]]; then
         echo "marathon starting success ......, Please access http://${LOCAL_IP}:8080"
     fi
 elif [[ ${TYPE} == "swarm" ]]; then
+    bash -x start-bootstrap.sh  etcd  dnsmasq flanneld consul-server  && \
+    bash -x start-docker.sh
 
+    export DIS_URL="consul://127.0.0.1:8500/default"
     bash -x plugins/watchdog/start.sh
 
     bash -x plugins/swarm/start.sh  master agent

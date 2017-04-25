@@ -62,21 +62,25 @@ echo "WITH_HDFS=${WITH_HDFS}"
 
 bash -x init-node.sh  && \
     bash -x start-bootstrap.sh  dnsmasq flanneld consul-agent  && \
-    bash -x start-docker.sh && \
-    bash -x start-mesos.sh  slave
-    #bash -x start-consul.sh  agent mesos-consul
+    bash -x start-docker.sh
 
 
 
 if [[ ${TYPE} == "mesos" ]]; then
     bash -x start-mesos.sh  slave
 elif [[ ${TYPE} == "swarm" ]]; then
+    export DIS_URL="consul://127.0.0.1:8500/default"
+
     bash -x plugins/swarm/start.sh agent
-    bash -x plugins/watchdog/start.sh agent
+    bash -x plugins/watchdog/start.sh
 
 else
     echo  "No such cluster type:${TYPE}"
     exit -1
 fi
+
+
+
+
 
 

@@ -14,4 +14,4 @@ services:
   environment:
    - "affinity:container!=*watchdog*"
    - DOCKER_HOST=unix:///var/run/docker.sock
-  command: --log-level=info -H unix:///var/run/docker.sock -m name consul://${LOCAL_IP}:8500
+  command: --log-level=info  -m name consul://${LOCAL_IP}:8500

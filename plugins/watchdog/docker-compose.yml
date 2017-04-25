@@ -11,4 +11,7 @@ services:
    - /var/run/docker.sock:/var/run/docker.sock
   labels:
    - com.github.omega.labels.system=true
+  environment:
+   - "affinity:container!=*watchdog*"
+   - DOCKER_HOST=unix:///var/run/docker.sock
   command: --log-level=info -H unix:///var/run/docker.sock consul://${LOCAL_IP}:8500

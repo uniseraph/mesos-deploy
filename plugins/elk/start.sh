@@ -5,7 +5,9 @@ BASE_DIR=$(cd `dirname $0` && pwd -P)
 
 LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
 
-MASTER_IP=${}
+MASTER_IP=${MASTER_IP:-${LOCAL_IP}}
+
+
 #DIS_URL=${DIS_URL:-"zk://${MASTER0_IP}:2181,${MASTER1_IP}:2181,${MASTER2_IP}:2181/default"}
 
 #HOSTNAME=`hostname`

@@ -33,19 +33,9 @@ services:
   logstash:
     image: logstash:5
     restart: always
-    command: -e 'input {  	tcp {	port => 5000	codec => json   	}
-                 	        udp {	port => 5000	codec => json      	}
-                 }
-                 filter {  	json {
-                 		source => "message"
-                 		target => "jsoncontent"
-                 	}
-                 }
-                 output {
-                 	elasticsearch {
-                 		hosts => "elasticsearch:9200"
-                 	}
-                 }' -f /etc/logstash/conf.d/
+    volumes:
+     - ./kibana/config:/etc/kibana/conf.d
+    command:  -f /etc/logstash/conf.d/
     labels:
       -  logspout.exclude=true
     network_mode: host

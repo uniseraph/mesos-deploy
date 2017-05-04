@@ -34,7 +34,7 @@ services:
     image: logstash:5
     restart: always
     volumes:
-     - ./kibana/config:/etc/kibana/conf.d
+     - ./logstash/config:/etc/logstash/conf.d
     command:  -f /etc/logstash/conf.d/
     labels:
       -  logspout.exclude=true

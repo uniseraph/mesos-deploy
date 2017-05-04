@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+  kibana:
+    image: kibana:5
+    restart: always
+    network_mode: host
+    labels:
+      -  logspout.exclude=true
+ #   volumes:
+ #     - ./kibana/config/:/etc/kibana/
+    ports:
+      - "5601:5601"
+    command: -p 5601 -H 0.0.0.0 -e http://${MASTER_IP}:5600
+  elasticsearch:
+    image: elasticsearch:5
+    restart: always
+    environment:
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g -Des.path.conf=/etc/elasticsearch"
+    networks_mode: host
+    command: -E network.host=${LOCAL_IP} -E discovery.zen.minimum_master_nodes=1
+  logspout:
+    image: bekt/logspout-logstash
+    restart: always
+    environment:
+      - ROUTE_URIS=logstash://${LOCAL_IP}:5000
+      - EXCLUDE_LABEL=logspout.exclude
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    network_mode: host
+    depends_on:
+      - logstash
+  logstash:
+    image: logstash:5
+    restart: always
+    command: -e 'input {  	tcp {	port => 5000	codec => json   	}
+                 	        udp {	port => 5000	codec => json      	}
+                 }
+                 filter {  	json {
+                 		source => "message"
+                 		target => "jsoncontent"
+                 	}
+                 }
+                 output {
+                 	elasticsearch {
+                 		hosts => "elasticsearch:9200"
+                 	}
+                 }' -f /etc/logstash/conf.d/
+    labels:
+      -  logspout.exclude=true
+    network_mode: host

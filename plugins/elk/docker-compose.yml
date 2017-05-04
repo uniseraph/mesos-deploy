@@ -17,7 +17,7 @@ services:
     restart: always
     environment:
       ES_JAVA_OPTS: "-Xms1g -Xmx1g -Des.path.conf=/etc/elasticsearch"
-    networks_mode: host
+    network_mode: host
     command: -E network.host=${LOCAL_IP} -E discovery.zen.minimum_master_nodes=1
   logspout:
     image: bekt/logspout-logstash

@@ -18,6 +18,8 @@ services:
     environment:
       ES_JAVA_OPTS: "-Xms1g -Xmx1g -Des.path.conf=/etc/elasticsearch"
     network_mode: host
+    labels:
+      -  logspout.exclude=true
     command: -E network.host=${LOCAL_IP} -E discovery.zen.minimum_master_nodes=1
   logspout:
     image: bekt/logspout-logstash

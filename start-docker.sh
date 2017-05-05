@@ -26,6 +26,7 @@ echo 'DOCKER_STORAGE_OPTIONS="-s devicemapper"' > /etc/sysconfig/docker-storage
 
 systemctl start docker
 systemctl status docker -l
+systemctl enable docker
 
 
 

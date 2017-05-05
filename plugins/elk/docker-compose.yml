@@ -35,12 +35,13 @@ services:
   logstash:
     image: logstash:5
     restart: always
-    environment:
-      - LS_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom"
+ #   environment:
+ #     - LS_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom"
     extra_hosts:
      - "elasticsearch:${MASTER_IP}"
     volumes:
      - ./logstash/config:/etc/logstash/conf.d
+     - /var/log/logstash
     command:  -f /etc/logstash/conf.d/
     labels:
       -  logspout.exclude=true

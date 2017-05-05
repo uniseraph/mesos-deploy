@@ -35,6 +35,8 @@ services:
   logstash:
     image: logstash:5
     restart: always
+    environment:
+      - LS_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom"
     extra_hosts:
      - "elasticsearch:${MASTER_IP}"
     volumes:

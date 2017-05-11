@@ -21,6 +21,7 @@ TYPE=mesos
 WITH_CADVISOR=false
 WITH_HDFS=false
 WITH_YARN=false
+WITH_ELK=false
 
 ARGS=`getopt -a -o T: -l type:,with-cadvisor,with-yarn,with-elk,with-hdfs,help -- "$@" `
 [ $? -ne 0 ] && usage
@@ -35,6 +36,9 @@ do
                 ;;
         --with-cadvisor)
                 WITH_CADVISOR=true
+                ;;
+        --with-elk)
+                WITH_ELK=true
                 ;;
         --with-hdfs)
                 WITH_HDFS=true
@@ -58,6 +62,7 @@ echo "TYPE=${TYPE}"
 echo "WITH_CADVISOR=${WITH_CADVISOR}"
 echo "WITH_YARN=${WITH_YARN}"
 echo "WITH_HDFS=${WITH_HDFS}"
+echo "WITH_ELK=${WITH_ELK}"
 
 
 bash -x init-node.sh  && \
@@ -81,6 +86,9 @@ fi
 
 
 
+if [[ ${WITH_ELK} == true ]]; then
+    bash -x plugins/elk/start.sh logspout logstash
+fi
 
 
 

@@ -37,7 +37,7 @@ services:
        - MESOS_QUORUM=2
        - MESOS_LOG_DIR=/var/log/mesos
        - MESOS_WORK_DIR=/var/lib/mesos
-       - MESOS_ACLS=
+       - MESOS_ACLS="{\"permissive\":true}"
        - "affinity:container!=*master*"
   marathon:
       image: mesosphere/marathon:v1.4.1

@@ -21,6 +21,7 @@ TYPE=mesos
 WITH_CADVISOR=false
 WITH_HDFS=false
 WITH_YARN=false
+WITH_ELK=false
 
 ARGS=`getopt -a -o T: -l type:,with-cadvisor,with-yarn,with-elk,with-hdfs,help -- "$@" `
 [ $? -ne 0 ] && usage
@@ -38,6 +39,9 @@ do
                 ;;
         --with-hdfs)
                 WITH_HDFS=true
+                ;;
+        --with-elk)
+                WITH_ELK=true
                 ;;
         --with-yarn)
                 WITH_YARN=true
@@ -58,7 +62,7 @@ echo "TYPE=${TYPE}"
 echo "WITH_CADVISOR=${WITH_CADVISOR}"
 echo "WITH_YARN=${WITH_YARN}"
 echo "WITH_HDFS=${WITH_HDFS}"
-
+echo "WITH_ELK=${WITH_ELK}"
 
 
 
@@ -82,9 +86,14 @@ elif [[ ${TYPE} == "swarm" ]]; then
 
     export DIS_URL="consul://127.0.0.1:8500/default"
     bash -x plugins/watchdog/start.sh
-
     bash -x plugins/swarm/start.sh  master agent
+
 else
     echo  "No such cluster type:${TYPE}"
     exit -1
+fi
+
+
+if [[ ${WITH_ELK} == true ]]; then
+    bash -x plugins/elk/start.sh logspout logstash elasticsearch kibana
 fi

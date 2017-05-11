@@ -23,7 +23,7 @@ services:
    - "affinity:container!=*flanneld*"
   command: /opt/bin/flanneld --etcd-endpoints=http://${MASTER0_IP}:2379,http://${MASTER1_IP}:2379,http://${MASTER2_IP}:2379 --ip-masq=false  --iface=${LOCAL_IP}
  etcd:
-  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/etcd:3.0.4
+  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/etcd:3.1.7
   network_mode: host
   restart: always
   volumes:

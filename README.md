@@ -36,7 +36,7 @@ export FLANNEL_NETWORK=172.16.0.0/12
 export MASTER0_IP=xxxx
 export MASTER1_IP=xxxx
 export MASTER2_IP=xxxx
-cd /opt/mesos-deploy && bash setup-master.sh  --with-elk=true --type=swarm
+cd /opt/mesos-deploy && bash setup-master.sh  --with-elk --type=swarm
 
 ```
 

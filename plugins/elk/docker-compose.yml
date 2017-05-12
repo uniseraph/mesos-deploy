@@ -39,8 +39,8 @@ services:
  #     - LS_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom"
     extra_hosts:
      - "elasticsearch0:${MASTER0_IP}"
-     - "elasticsearch1:${MASTER0_IP}"
-     - "elasticsearch2:${MASTER0_IP}"
+     - "elasticsearch1:${MASTER1_IP}"
+     - "elasticsearch2:${MASTER2_IP}"
     volumes:
      - ./logstash/config:/etc/logstash/conf.d
      - /var/log/logstash

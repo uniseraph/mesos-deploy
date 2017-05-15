@@ -9,15 +9,22 @@ services:
       -  logspout.exclude=true
  #   volumes:
  #     - ./kibana/config/:/etc/kibana/
-    ports:
-      - "5601:5601"
+ #   ports:
+ #     - "5601:5601"
     command: -p 5601 -H 0.0.0.0 -e http://${LOCAL_IP}:9200
   elasticsearch:
-    image: elasticsearch:5
+    image: registry.cn-hangzhou.aliyuncs.com/zanecloud/elasticsearch:5.4.0
     restart: always
     environment:
-      ES_JAVA_OPTS: "-Xms1g -Xmx1g -Des.path.conf=/etc/elasticsearch"
+      - "cluster.name=myelk"
+      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - "discovery.zen.ping.unicast.hosts=[${MASTER0_IP},${MASTER1_IP},${MASTER2_IP}]"
+      - "discovery.zen.minimum_master_nodes=2"
     network_mode: host
+    volumes:
+      - ./elasticsearch/config/jvm.options:/usr/share/elasticsearch/config/jvm.options
+      - esdata:/usr/share/elasticsearch/data
     labels:
       -  logspout.exclude=true
     command: -E network.host=${LOCAL_IP} -E discovery.zen.minimum_master_nodes=1
@@ -38,9 +45,9 @@ services:
  #   environment:
  #     - LS_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom"
     extra_hosts:
-     - "elasticsearch0:${MASTER0_IP}"
-     - "elasticsearch1:${MASTER1_IP}"
-     - "elasticsearch2:${MASTER2_IP}"
+     - "es0:${MASTER0_IP}"
+     - "es1:${MASTER1_IP}"
+     - "es2:${MASTER2_IP}"
     volumes:
      - ./logstash/config:/etc/logstash/conf.d
      - /var/log/logstash
@@ -48,3 +55,6 @@ services:
     labels:
       -  logspout.exclude=true
     network_mode: host
+volumes:
+  esdata:
+      driver: local

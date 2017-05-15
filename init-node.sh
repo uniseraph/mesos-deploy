@@ -3,6 +3,8 @@
 echo "net.ipv4.conf.eth0.rp_filter=0" > /etc/sysctl.d/omega.conf
 
 sysctl -w net.ipv4.conf.eth0.rp_filter=0
+sysctl -w vm.max_map_count=262144
+
 
 yum install -y docker jq bind-utils bridge-utils tcpdump dnsmasq haveged
 
@@ -10,7 +12,6 @@ systemctl enable haveged
 systemclt restart haveged
 
 cp -f systemd/bootstrap/bootstrap.service /etc/systemd/system/
-#cp -f systemd/bootstrap/bootstrap.socket /etc/systemd/system/
 cp -f systemd/bootstrap/bootstrap /etc/sysconfig/bootstrap
 
 cp -f systemd/dnsmasq/dnsmasq.service /usr/lib/systemd/system/dnsmasq.service

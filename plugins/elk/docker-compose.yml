@@ -2,7 +2,7 @@ version: '2'
 
 services:
   kibana:
-    image: kibana:5
+    image: reigstry.cn-hangzhou.aliyuncs.com/zanecloud/kibana:5.4.0
     restart: always
     network_mode: host
     volumes:
@@ -19,7 +19,7 @@ services:
       - "network.host=${LOCAL_IP}"
       - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "discovery.zen.ping.unicast.hosts=[${MASTER0_IP},${MASTER1_IP},${MASTER2_IP}]"
+      - "discovery.zen.ping.unicast.hosts=${MASTER0_IP},${MASTER1_IP},${MASTER2_IP}"
       - "discovery.zen.minimum_master_nodes=2"
       - "discovery.zen.ping_timeout=30s"
     network_mode: host

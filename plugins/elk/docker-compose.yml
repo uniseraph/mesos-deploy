@@ -5,11 +5,12 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/zanecloud/kibana:5.4.0
     restart: always
     network_mode: host
+    environment:
+      - "elasticsearch.url=http://${LOCAL_IP}:9200"
     volumes:
       - ./kibana/config/:/usr/share/kibana/config
     labels:
       -  logspout.exclude=true
-    command: -p 5601 -H 0.0.0.0 -e http://${LOCAL_IP}:9200
   elasticsearch:
     image: registry.cn-hangzhou.aliyuncs.com/zanecloud/elasticsearch:5.4.0
     restart: always

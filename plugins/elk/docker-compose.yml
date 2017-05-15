@@ -7,10 +7,6 @@ services:
     network_mode: host
     labels:
       -  logspout.exclude=true
- #   volumes:
- #     - ./kibana/config/:/etc/kibana/
- #   ports:
- #     - "5601:5601"
     command: -p 5601 -H 0.0.0.0 -e http://${LOCAL_IP}:9200
   elasticsearch:
     image: registry.cn-hangzhou.aliyuncs.com/zanecloud/elasticsearch:5.4.0
@@ -20,7 +16,7 @@ services:
       - "node.name=${ES_NAME}"
       - "network.host=${LOCAL_IP}"
       - "bootstrap.memory_lock=true"
-      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - "discovery.zen.ping.unicast.hosts=[${MASTER0_IP},${MASTER1_IP},${MASTER2_IP}]"
       - "discovery.zen.minimum_master_nodes=2"
     network_mode: host

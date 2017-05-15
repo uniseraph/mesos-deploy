@@ -1,0 +1,35 @@
+version: '2'
+services:
+ zookeeper1:
+  image: zookeeper:3.4.10
+  restart: always
+  labels:
+    - 'com.docker.swarm.affinities=["container!=*zookeeper*"]'
+  environment:
+    ZOO_MY_ID: 1
+    ZOO_SERVERS: server.1=zookeeper1.service.consul:2888:3888 server.2=zookeeper2.service.consul:2888:3888 server.3=zookeeper3.service.consul:2888:3888
+  volumes:
+    - /data
+    - /datalog
+ zookeeper2:
+  image: zookeeper:3.4.10
+  restart: always
+  labels:
+    - 'com.docker.swarm.affinities=["container!=*zookeeper*"]'
+  environment:
+    ZOO_MY_ID: 2
+    ZOO_SERVERS: server.1=zookeeper1.service.consul:2888:3888 server.2=zookeeper2.service.consul:2888:3888 server.3=zookeeper3.service.consul:2888:3888
+  volumes:
+    - /data
+    - /datalog
+ zookeeper3:
+  image: zookeeper:3.4.10
+  restart: always
+  labels:
+    - 'com.docker.swarm.affinities=["container!=*zookeeper*"]'
+  environment:
+    ZOO_MY_ID: 3
+    ZOO_SERVERS: server.1=zookeeper1.service.consul:2888:3888 server.2=zookeeper2.service.consul:2888:3888 server.3=zookeeper3.service.consul:2888:3888
+  volumes:
+    - /data
+    - /datalog

@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+ tunnel:
+  image: registry.cn-hangzhou.aliyuncs.com/zanecloud/tunnel:0.1.0
+  restart: always
+  network_mode: host
+  pid: host
+  environment:
+   - DOCKER_HOST=${DOCKER_HOST}
+  labels:
+   - com.github.omega.labels.system=true
+  command: --debug true

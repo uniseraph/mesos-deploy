@@ -5,6 +5,8 @@ services:
     image: kibana:5
     restart: always
     network_mode: host
+    volumes:
+      - ./kibana/config/:/usr/share/kibana/config
     labels:
       -  logspout.exclude=true
     command: -p 5601 -H 0.0.0.0 -e http://${LOCAL_IP}:9200
@@ -15,7 +17,7 @@ services:
       - "cluster.name=myelk"
       - "node.name=${ES_NAME}"
       - "network.host=${LOCAL_IP}"
-      - "bootstrap.memory_lock=true"
+      - "bootstrap.memory.lock=true"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - "discovery.zen.ping.unicast.hosts=[${MASTER0_IP},${MASTER1_IP},${MASTER2_IP}]"
       - "discovery.zen.minimum_master_nodes=2"
@@ -27,6 +29,7 @@ services:
         hard: -1
     volumes:
       - ./elasticsearch/config/jvm.options:/usr/share/elasticsearch/config/jvm.options
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - esdata:/usr/share/elasticsearch/data
     labels:
       -  logspout.exclude=true
@@ -42,7 +45,7 @@ services:
     depends_on:
       - logstash
   logstash:
-    image: logstash:5
+    image: registry.cn-hangzhou.aliyuncs.com/zanecloud/logstash:5.4.0
     restart: always
  #   environment:
  #     - LS_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom"
@@ -50,10 +53,12 @@ services:
      - "es0:${MASTER0_IP}"
      - "es1:${MASTER1_IP}"
      - "es2:${MASTER2_IP}"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     volumes:
-     - ./logstash/config:/etc/logstash/conf.d
      - /var/log/logstash
-    command:  -f /etc/logstash/conf.d/
+     - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+     - ./logstash/pipeline:/usr/share/logstash/pipeline
     labels:
       -  logspout.exclude=true
     network_mode: host

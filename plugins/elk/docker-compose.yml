@@ -7,11 +7,12 @@ services:
     network_mode: host
     environment:
       ELASTICSEARCH_URL: http://${LOCAL_IP}:9200
-      SERVER_HOST: ${LOCAL_IP}
-      XPACK_SECURITY_ENABLED: false
-      XPACK_MONITORING_ENABLED: false
-      XPACK_MONITORING_KIBANA_COLLECTION_ENABLED: false
-      XPACK_MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED: false
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 5601
+ #     XPACK_SECURITY_ENABLED: false
+ #     XPACK_MONITORING_ENABLED: false
+ #     XPACK_MONITORING_KIBANA_COLLECTION_ENABLED: false
+ #     XPACK_MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED: false
     volumes:
       - ./kibana/config/:/usr/share/kibana/config
     labels:

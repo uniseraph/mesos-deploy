@@ -17,6 +17,8 @@ services:
     restart: always
     environment:
       - "cluster.name=myelk"
+      - "node.name=${ES_NAME}"
+      - "network.host=${LOCAL_IP}"
       - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
       - "discovery.zen.ping.unicast.hosts=[${MASTER0_IP},${MASTER1_IP},${MASTER2_IP}]"
@@ -27,7 +29,6 @@ services:
       - esdata:/usr/share/elasticsearch/data
     labels:
       -  logspout.exclude=true
-    command: -E network.host=${LOCAL_IP} -E discovery.zen.minimum_master_nodes=1
   logspout:
     image: bekt/logspout-logstash
     restart: always

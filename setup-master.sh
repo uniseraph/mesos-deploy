@@ -95,10 +95,5 @@ fi
 
 
 if [[ ${WITH_ELK} == true ]]; then
-
-    if [[ ${LOCAL_IP} == ${MASTER0_IP} ]]; then
-        bash -x plugins/elk/start.sh logspout logstash elasticsearch kibana
-    else
-        bash -x plugins/elk/start.sh logspout logstash
-    fi
+    bash -x plugins/elk/start.sh logspout logstash elasticsearch kibana
 fi

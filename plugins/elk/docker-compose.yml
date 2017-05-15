@@ -17,7 +17,7 @@ services:
       - "cluster.name=myelk"
       - "node.name=${ES_NAME}"
       - "network.host=${LOCAL_IP}"
-      - "bootstrap.memory.lock=true"
+      - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - "discovery.zen.ping.unicast.hosts=[${MASTER0_IP},${MASTER1_IP},${MASTER2_IP}]"
       - "discovery.zen.minimum_master_nodes=2"

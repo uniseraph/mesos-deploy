@@ -7,6 +7,7 @@ services:
     network_mode: host
     environment:
       - "elasticsearch.url=http://${LOCAL_IP}:9200"
+      - "server.host=0.0.0.0"
     volumes:
       - ./kibana/config/:/usr/share/kibana/config
     labels:

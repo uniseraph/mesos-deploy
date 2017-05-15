@@ -6,7 +6,7 @@ sysctl -w net.ipv4.conf.eth0.rp_filter=0
 sysctl -w vm.max_map_count=262144
 
 
-yum install -y docker jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat  sysdig
+yum install -y docker jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat  sysdig pidstat mpstat iotop blktrace perf nicstat dstat
 
 systemctl enable haveged
 systemctl restart haveged

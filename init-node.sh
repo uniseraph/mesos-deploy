@@ -9,7 +9,7 @@ sysctl -w vm.max_map_count=262144
 yum install -y docker jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat
 
 systemctl enable haveged
-systemctt restart haveged
+systemctl restart haveged
 
 cp -f systemd/bootstrap/bootstrap.service /etc/systemd/system/
 cp -f systemd/bootstrap/bootstrap /etc/sysconfig/bootstrap

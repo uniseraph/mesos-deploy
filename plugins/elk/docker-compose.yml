@@ -2,7 +2,7 @@ version: '2'
 
 services:
   kibana:
-    image: reigstry.cn-hangzhou.aliyuncs.com/zanecloud/kibana:5.4.0
+    image: registry.cn-hangzhou.aliyuncs.com/zanecloud/kibana:5.4.0
     restart: always
     network_mode: host
     volumes:

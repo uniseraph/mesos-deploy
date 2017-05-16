@@ -117,6 +117,7 @@ int br_add_bridge(struct net *net, const char *name)
 	struct net_device *dev;
 	int res;
 
+   //初始化一个net_bridge网络设备
 	dev = alloc_netdev(sizeof(struct net_bridge), name, NET_NAME_UNKNOWN,
 			   br_dev_setup);
 
@@ -124,14 +125,81 @@ int br_add_bridge(struct net *net, const char *name)
 		return -ENOMEM;
 
 	dev_net_set(dev, net);
+	//配置net_bridge的行为逻辑
 	dev->rtnl_link_ops = &br_link_ops;
 
+    //注册netdevice
 	res = register_netdev(dev);
 	if (res)
 		free_netdev(dev);
 	return res;
 }
 ```
+
+net_bridge作为一个netdevice,配置如下hook
+```
+static const struct net_device_ops br_netdev_ops = {
+	.ndo_open		 = br_dev_open,
+	.ndo_stop		 = br_dev_stop,
+	.ndo_init		 = br_dev_init,
+	.ndo_start_xmit		 = br_dev_xmit,
+	.ndo_get_stats64	 = br_get_stats64,
+	.ndo_set_mac_address	 = br_set_mac_address,
+	.ndo_set_rx_mode	 = br_dev_set_multicast_list,
+	.ndo_change_rx_flags	 = br_dev_change_rx_flags,
+	.ndo_change_mtu		 = br_change_mtu,
+	.ndo_do_ioctl		 = br_dev_ioctl,
+#ifdef CONFIG_NET_POLL_CONTROLLER
+	.ndo_netpoll_setup	 = br_netpoll_setup,
+	.ndo_netpoll_cleanup	 = br_netpoll_cleanup,
+	.ndo_poll_controller	 = br_poll_controller,
+#endif
+	.ndo_add_slave		 = br_add_slave,
+	.ndo_del_slave		 = br_del_slave,
+	.ndo_fix_features        = br_fix_features,
+	.ndo_fdb_add		 = br_fdb_add,
+	.ndo_fdb_del		 = br_fdb_delete,
+	.ndo_fdb_dump		 = br_fdb_dump,
+	.ndo_bridge_getlink	 = br_getlink,
+	.ndo_bridge_setlink	 = br_setlink,
+	.ndo_bridge_dellink	 = br_dellink,
+};
+```
+
+作为一个netdevice的成员变量， net_bridge的rtnl_link_ops配置如下
+```
+struct rtnl_link_ops br_link_ops __read_mostly = {
+	.kind			= "bridge",
+	.priv_size		= sizeof(struct net_bridge),
+	.setup			= br_dev_setup,
+	.maxtype		= IFLA_BRPORT_MAX,
+	.policy			= br_policy,
+	.validate		= br_validate,
+	.newlink		= br_dev_newlink,
+	.changelink		= br_changelink,
+	.dellink		= br_dev_delete,
+	.get_size		= br_get_size,
+	.fill_info		= br_fill_info,
+
+	.slave_maxtype		= IFLA_BRPORT_MAX,
+	.slave_policy		= br_port_policy,
+	.slave_changelink	= br_port_slave_changelink,
+	.get_slave_size		= br_port_get_slave_size,
+	.fill_slave_info	= br_port_fill_slave_info,
+};
+
+```
+
+还有ethtool_ops配置如下
+```
+static const struct ethtool_ops br_ethtool_ops = {
+	.get_drvinfo    = br_getinfo,
+	.get_link	= ethtool_op_get_link,
+};
+
+
+```
+
 
 #####
 

@@ -13,4 +13,4 @@ services:
      - /usr/share/filebeat/logs
      - /var/lib/docker:/var/lib/docker
     network_mode: host
-volumes:
+

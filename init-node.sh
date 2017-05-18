@@ -32,7 +32,7 @@ pip install -U pip setuptools
 pip install docker-py
 curl -L https://bit.ly/glances | /bin/bash
 
-
+mkdir /etc/glances
 cp -f systemd/glances/glances.service /etc/systemd/system/
 cp -f systemd/glances/glances.conf  /etc/glances/glances.conf
 

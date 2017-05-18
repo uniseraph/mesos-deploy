@@ -5,8 +5,10 @@ echo "net.ipv4.conf.eth0.rp_filter=0" > /etc/sysctl.d/omega.conf
 sysctl -w net.ipv4.conf.eth0.rp_filter=0
 sysctl -w vm.max_map_count=262144
 
+cp sysctl.conf /etc/sysctl.conf
+sysctl -p
 
-yum install -y docker jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat
+yum install -y docker jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat curl wget
 
 systemctl enable haveged
 systemctl restart haveged
@@ -24,6 +26,15 @@ systemctl start bootstrap
 systemctl enable bootstrap
 systemctl status bootstrap -l
 
+
+
+pip install -U pip setuptools
+pip install docker-py
+curl -L https://bit.ly/glances | /bin/bash
+
+
+cp -f systemd/glances/glances.service /etc/systemd/system/
+cp -f systemd/glances/glances.conf  /etc/glances/glances.conf
 
 #systemctl start dnsmasq
 #systemctl status dnsmasq -l

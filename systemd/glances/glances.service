@@ -1,0 +1,9 @@
+[Unit]
+Description=Glances Monitor server.
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/glances -1 --export-elasticsearch -C /etc/glances/glances.conf
+
+[Install]
+WantedBy=multi-user.target

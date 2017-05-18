@@ -22,8 +22,10 @@ WITH_CADVISOR=false
 WITH_HDFS=false
 WITH_YARN=false
 WITH_ELK=false
+WITH_EBK=false
 
-ARGS=`getopt -a -o T: -l type:,with-cadvisor,with-yarn,with-elk,with-hdfs,help -- "$@" `
+
+ARGS=`getopt -a -o T: -l type:,with-cadvisor,with-yarn,with-elk,with-ebk,with-hdfs,help -- "$@" `
 [ $? -ne 0 ] && usage
 #set -- "${ARGS}"
 eval set -- "${ARGS}"
@@ -39,6 +41,9 @@ do
                 ;;
         --with-elk)
                 WITH_ELK=true
+                ;;
+        --with-elk)
+                WITH_EBK=true
                 ;;
         --with-hdfs)
                 WITH_HDFS=true
@@ -63,6 +68,7 @@ echo "WITH_CADVISOR=${WITH_CADVISOR}"
 echo "WITH_YARN=${WITH_YARN}"
 echo "WITH_HDFS=${WITH_HDFS}"
 echo "WITH_ELK=${WITH_ELK}"
+echo "WITH_ELK=${WITH_EBK}"
 
 
 bash -x init-node.sh  && \
@@ -91,4 +97,7 @@ if [[ ${WITH_ELK} == true ]]; then
 fi
 
 
+if [[ ${WITH_EBK} == true ]]; then
+    bash -x plugins/beats/start.sh
+fi
 

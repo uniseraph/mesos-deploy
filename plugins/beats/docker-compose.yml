@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  filebeats:
+    image: docker.elastic.co/beats/filebeat:5.4.0
+    restart: always
+    extra_hosts:
+     - "es0:${MASTER0_IP}"
+     - "es1:${MASTER1_IP}"
+     - "es2:${MASTER2_IP}"
+    volumes:
+     - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml
+     - /usr/share/filebeat/logs
+     - /var/lib/docker:/var/lib/docker
+    network_mode: host
+volumes:

@@ -28,5 +28,6 @@ systemctl start docker
 systemctl status docker -l
 systemctl enable docker
 
-
+# for filebeat container
+chmod -R 755 /var/lib/docker
 

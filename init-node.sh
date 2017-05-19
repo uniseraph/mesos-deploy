@@ -28,13 +28,13 @@ systemctl status bootstrap -l
 
 
 
-pip install -U pip setuptools
-pip install docker-py
-curl -L https://bit.ly/glances | /bin/bash
+#pip install -U pip setuptools
+#pip install docker-py
+#curl -L https://bit.ly/glances | /bin/bash
 
-mkdir /etc/glances
-cp -f systemd/glances/glances.service /etc/systemd/system/
-cp -f systemd/glances/glances.conf  /etc/glances/glances.conf
+#mkdir /etc/glances
+#cp -f systemd/glances/glances.service /etc/systemd/system/
+#cp -f systemd/glances/glances.conf  /etc/glances/glances.conf
 
 #systemctl start dnsmasq
 #systemctl status dnsmasq -l

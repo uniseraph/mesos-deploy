@@ -12,14 +12,19 @@ BASE_DIR=$(cd `dirname $0` && pwd -P)
 
 #HOSTNAME=`hostname`
 
-docker run -ti --rm \
-        -v ${BASE_DIR}:${BASE_DIR} \
-        -v /var/run/docker.sock:/var/run/docker.sock \
-        -e DOCKER_HOST=unix:///var/run/docker.sock  \
-        -e LOCAL_IP=${LOCAL_IP} \
-        -e MASTER0_IP=${MASTER0_IP} \
-        -e MASTER1_IP=${MASTER1_IP} \
-        -e MASTER2_IP=${MASTER2_IP} \
-        -w ${BASE_DIR} \
-        docker/compose:1.9.0 \
-        up -d $*
+#docker run -ti --rm \
+#        -v ${BASE_DIR}:${BASE_DIR} \
+#        -v /var/run/docker.sock:/var/run/docker.sock \
+#        -e DOCKER_HOST=unix:///var/run/docker.sock  \
+#        -e MASTER0_IP=${MASTER0_IP} \
+#        -e MASTER1_IP=${MASTER1_IP} \
+#        -e MASTER2_IP=${MASTER2_IP} \
+#        -w ${BASE_DIR} \
+#        docker/compose:1.9.0 \
+#        up -d $*
+
+
+MASTER0_IP=${MASTER0_IP} \
+MASTER1_IP=${MASTER1_IP} \
+MASTER2_IP=${MASTER2_IP} \
+DOCKER_HOST=${MASTER0_IP}:2375 docker-compose up -d $*

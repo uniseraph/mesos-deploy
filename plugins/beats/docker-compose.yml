@@ -11,7 +11,7 @@ services:
     volumes:
      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml
      - /usr/share/filebeat/logs
-     - /var/lib/docker:/var/lib/docker
+     - /var/lib/docker/containers:/var/lib/docker/containers
     network_mode: host
   metricbeat:
     image: docker.elastic.co/beats/metricbeat:5.4.0

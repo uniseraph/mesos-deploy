@@ -15,6 +15,7 @@ services:
     network_mode: host
   metricbeat:
     image: docker.elastic.co/beats/metricbeat:5.4.0
+    network_mode: host
     restart: always
     extra_hosts:
      - "es0:${MASTER0_IP}"

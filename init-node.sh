@@ -8,7 +8,7 @@ sysctl -w vm.max_map_count=262144
 cp sysctl.conf /etc/sysctl.conf
 sysctl -p
 
-yum install -y docker jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat curl wget sysdig pidstat mpstat iotop blktrace perf  dstat ltrace
+yum install -y docker jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat curl wget sysdig pidstat mpstat iotop blktrace perf  dstat ltrace lsof
 
 systemctl enable haveged
 systemctl restart haveged
@@ -27,7 +27,7 @@ systemctl enable bootstrap
 systemctl status bootstrap -l
 
 
-
+pip install docker-compose
 #pip install -U pip setuptools
 #pip install docker-py
 #curl -L https://bit.ly/glances | /bin/bash

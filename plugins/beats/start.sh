@@ -27,4 +27,4 @@ BASE_DIR=$(cd `dirname $0` && pwd -P)
 MASTER0_IP=${MASTER0_IP} \
 MASTER1_IP=${MASTER1_IP} \
 MASTER2_IP=${MASTER2_IP} \
-DOCKER_HOST=${MASTER0_IP}:2375 docker-compose up -d $*
+docker-compose -f ${BASE_DIR}/docker-compose.yml up -d $*

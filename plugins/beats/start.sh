@@ -24,8 +24,20 @@ BASE_DIR=$(cd `dirname $0` && pwd -P)
 #        up -d $*
 
 
-MASTER0_IP=${MASTER0_IP} \
-MASTER1_IP=${MASTER1_IP} \
-MASTER2_IP=${MASTER2_IP} \
-DOCKER_HOST=unix:///var/run/docker.sock \
-docker-compose -f ${BASE_DIR}/docker-compose.yml up -d $*
+#MASTER0_IP=${MASTER0_IP} \
+#MASTER1_IP=${MASTER1_IP} \
+#MASTER2_IP=${MASTER2_IP} \
+#DOCKER_HOST=unix:///var/run/docker.sock \
+#docker-compose -f ${BASE_DIR}/docker-compose.yml up -d $*
+
+
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.4.0-x86_64.rpm
+rpm -vi filebeat-5.4.0-x86_64.rpm
+
+cp filebeat/config/filbeat.yml /etc/filebeat/filebeat.yml
+systemctl restart filebeat
+systemctl enable filebeat
+
+
+systemctl status filebeat
+/usr/share/filebeat/scripts/import_dashboards -es http://${MASTER0_IP}:9200 -user elastic

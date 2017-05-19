@@ -27,6 +27,6 @@ processors:
 - add_cloud_metadata:
 
 output.elasticsearch:
-  hosts: ['es0:9200','es1:9200','es2:9200']
+  hosts: ["${MASTER0_IP}:9200","${MASTER1_IP}:9200","${MASTER2_IP}:9200"]
   username: elastic
   password: changeme

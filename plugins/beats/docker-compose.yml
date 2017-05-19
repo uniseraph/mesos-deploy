@@ -4,10 +4,6 @@ services:
   filebeat:
     image: docker.elastic.co/beats/filebeat:5.4.0
     restart: always
-    extra_hosts:
-     - "es0:${MASTER0_IP}"
-     - "es1:${MASTER1_IP}"
-     - "es2:${MASTER2_IP}"
     volumes:
      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml
      - /usr/share/filebeat/logs
@@ -17,10 +13,6 @@ services:
     image: docker.elastic.co/beats/metricbeat:5.4.0
     network_mode: host
     restart: always
-    extra_hosts:
-     - "es0:${MASTER0_IP}"
-     - "es1:${MASTER1_IP}"
-     - "es2:${MASTER2_IP}"
     volumes:
      - ./metricbeat/config/metricbeat.yml:/usr/share/metricbeat/filebeat.yml
      - /usr/share/metricbeat/logs

@@ -34,7 +34,7 @@ BASE_DIR=$(cd `dirname $0` && pwd -P)
 curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.4.0-x86_64.rpm
 rpm -vi filebeat-5.4.0-x86_64.rpm
 
-cp filebeat/config/filbeat.yml /etc/filebeat/filebeat.yml
+cp ${BASE_DIR}/filebeat/config/filbeat.yml /etc/filebeat/filebeat.yml
 systemctl restart filebeat
 systemctl enable filebeat
 

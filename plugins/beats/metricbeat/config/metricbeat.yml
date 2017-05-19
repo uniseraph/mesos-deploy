@@ -23,10 +23,16 @@ metricbeat.modules:
   filters:
     - drop_event.when.regexp.mount_point: '^(/hostfs)?/(sys|cgroup|proc|dev|etc|host|var/lib/docker)($|/)'
 
+- module: docker
+  metricsets: ["container", "cpu", "diskio", "healthcheck","image",  "info", "memory", "network"]
+  hosts: ["unix:///var/run/docker.sock"]
+  enabled: true
+  period: 10s
+
 processors:
 - add_cloud_metadata:
 
 output.elasticsearch:
-  hosts: ["${MASTER0_IP}:9200","${MASTER1_IP}:9200","${MASTER2_IP}:9200"]
+  hosts: ["master0:9200","master1:9200","master2:9200"]
   username: elastic
   password: changeme

@@ -15,7 +15,7 @@ docker run -ti --rm \
 	    -v /var/run/docker.sock:/var/run/docker.sock \
         -e DOCKER_HOST=unix:///var/run/docker.sock  \
         -e LOCAL_IP=${LOCAL_IP} \
-        -e MASTER_IP=${LOCAL_IP} \
+        -e MASTER_IP=${MASTER_IP} \
         -e DIS_URL=${DIS_URL} \
         -w ${BASE_DIR} \
         docker/compose:1.9.0 \

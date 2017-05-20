@@ -15,8 +15,7 @@ systemctl enable filebeat
 
 
 systemctl status filebeat
-cd /usr/share/filebeat  && ./scripts/import_dashboards -es http://${MASTER_IP}:9200 -user elastic
-cd ${BASE_DIR}
+/usr/share/filebeat/scripts/import_dashboards -es http://${MASTER_IP}:9200
 
 curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-5.4.0-x86_64.rpm
 rpm -vi metricbeat-5.4.0-x86_64.rpm && rm -rf metricbeat-5.4.0-x86_64.rpm
@@ -28,5 +27,4 @@ systemctl enable metricbeat
 
 
 systemctl status metricbeat
-cd /usr/share/metricbeat  && ./scripts/import_dashboards -es http://${MASTER_IP}:9200 -user elastic
-cd ${BASE_DIR}
+/usr/share/metricbeat/scripts/import_dashboards -es http://${MASTER_IP}:9200

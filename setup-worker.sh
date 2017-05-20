@@ -81,9 +81,6 @@ elif [[ ${TYPE} == "swarm" ]]; then
     bash -x plugins/swarm/start.sh agent
     bash -x plugins/watchdog/start.sh
 
-    bash -x plugins/elk/start.sh logspout logstash
-
-
 else
     echo  "No such cluster type:${TYPE}"
     exit -1

@@ -9,7 +9,7 @@ rpm -vi filebeat-5.4.0-x86_64.rpm && rm -rf filebeat-5.4.0-x86_64.rpm
 
 
 cp ${BASE_DIR}/filebeat/config/filebeat.yml /etc/filebeat/filebeat.yml
-sed -i -e 's#master#${MASTER_IP}#g' /etc/filebeat/filebeat.yml
+sed -i -e "s#master#${MASTER_IP}#g" /etc/filebeat/filebeat.yml
 systemctl restart filebeat
 systemctl enable filebeat
 

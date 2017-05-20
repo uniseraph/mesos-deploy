@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
+export MASTER_IP=${LOCAL_IP}
 
 if [[ -z ${MASTER_IP} ]]; then
     echo "Please export MASTER_IP in your env"

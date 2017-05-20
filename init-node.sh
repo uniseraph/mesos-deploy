@@ -8,7 +8,7 @@ sysctl -w vm.max_map_count=262144
 cp sysctl.conf /etc/sysctl.conf
 sysctl -p
 
-yum install -y docker jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat curl wget sysdig pidstat mpstat iotop blktrace perf  dstat ltrace lsof glances
+yum install -y docker jq bind-utils bridge-utils tcpdump dnsmasq haveged strace gdb htop sysstat curl wget sysdig  iotop blktrace perf  dstat ltrace lsof glances
 
 systemctl enable haveged
 systemctl restart haveged

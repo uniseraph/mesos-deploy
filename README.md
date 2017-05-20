@@ -51,6 +51,15 @@ cd /opt/mesos-deploy && bash setup-worker.sh  --with-ebk --type=swarm
 
 ##  验证
 
+
+### 容器集群管理
+
+
+访问master集群的公网ip ， http://xxxx:9000
+
+### 日志和性能监控 , http://xxxx:5601
+
+
 ### 创建一个nginx app
 
 ```

@@ -24,7 +24,7 @@ docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
         -e MASTER_IP=${MASTER_IP} \
         -w $(pwd)  \
         docker/compose:1.9.0 \
-        -f compose/bootstrap-dev.yml \
+        -f compose/bootstrap.yml \
         -p bootstrap \
         up -d $*
 

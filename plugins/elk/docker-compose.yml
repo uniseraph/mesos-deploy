@@ -2,25 +2,41 @@ version: '2'
 
 services:
   kibana:
-    image: kibana:5
+    image: registry.cn-hangzhou.aliyuncs.com/zanecloud/kibana:5.4.0
     restart: always
     network_mode: host
+    environment:
+      ELASTICSEARCH_URL: http://${MASTER_IP}:9200
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 5601
+ #     XPACK_SECURITY_ENABLED: false
+ #     XPACK_MONITORING_ENABLED: false
+ #     XPACK_MONITORING_KIBANA_COLLECTION_ENABLED: false
+ #     XPACK_MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED: false
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
     labels:
       -  logspout.exclude=true
- #   volumes:
- #     - ./kibana/config/:/etc/kibana/
-    ports:
-      - "5601:5601"
-    command: -p 5601 -H 0.0.0.0 -e http://${MASTER_IP}:9200
   elasticsearch:
-    image: elasticsearch:5
+    image: registry.cn-hangzhou.aliyuncs.com/zanecloud/elasticsearch:5.4.0
     restart: always
     environment:
-      ES_JAVA_OPTS: "-Xms1g -Xmx1g -Des.path.conf=/etc/elasticsearch"
+      - "cluster.name=myelk"
+      - "node.name=es0"
+      - "network.host=0.0.0.0"
+      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     network_mode: host
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elasticsearch/config/jvm.options:/usr/share/elasticsearch/config/jvm.options
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - esdata:/usr/share/elasticsearch/data
     labels:
       -  logspout.exclude=true
-    command: -E network.host=${LOCAL_IP} -E discovery.zen.minimum_master_nodes=1
   logspout:
     image: bekt/logspout-logstash
     restart: always
@@ -33,16 +49,19 @@ services:
     depends_on:
       - logstash
   logstash:
-    image: logstash:5
+    image: registry.cn-hangzhou.aliyuncs.com/zanecloud/logstash:5.4.0
     restart: always
- #   environment:
- #     - LS_JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom"
     extra_hosts:
      - "elasticsearch:${MASTER_IP}"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     volumes:
-     - ./logstash/config:/etc/logstash/conf.d
      - /var/log/logstash
-    command:  -f /etc/logstash/conf.d/
+     - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+     - ./logstash/pipeline:/usr/share/logstash/pipeline
     labels:
       -  logspout.exclude=true
     network_mode: host
+volumes:
+  esdata:
+      driver: local

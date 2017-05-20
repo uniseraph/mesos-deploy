@@ -9,7 +9,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/sys/fs/cgroup
       - slave-log:/var/log/mesos
-      - slave-tmp:/var/tmp/mesos
+      - slave-tmp:/var/lib/mesos
       - /usr/bin/docker:/usr/bin/docker
       - /cgroup:/cgroup
     environment:
@@ -28,14 +28,13 @@ services:
       restart: always
       volumes:
        - master-log:/var/log/mesos
-       - master-tmp:/var/tmp/mesos
+       - master-tmp:/var/lib/mesos
       environment:
        - MESOS_HOSTNAME=${LOCAL_IP}
        - MESOS_IP=${LOCAL_IP}
        - MESOS_PORT=5050
        - MESOS_ZK=${ZK_URL}/mesos
        - MESOS_QUORUM=2
-       - MESOS_REGISTRY=in_memory
        - MESOS_LOG_DIR=/var/log/mesos
        - MESOS_WORK_DIR=/var/lib/mesos
        - MESOS_ACLS="{\"permissive\":true}"

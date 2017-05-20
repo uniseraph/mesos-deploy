@@ -13,8 +13,9 @@ WITH_CADVISOR=false
 WITH_HDFS=false
 WITH_YARN=false
 WITH_ELK=false
+WITH_EBK=false
 
-ARGS=`getopt -a -o T: -l type:,with-cadvisor,with-yarn,with-elk,with-hdfs,help -- "$@" `
+ARGS=`getopt -a -o T: -l type:,with-cadvisor,with-yarn,with-elk,with-ebk,with-hdfs,help -- "$@" `
 [ $? -ne 0 ] && usage
 #set -- "${ARGS}"
 eval set -- "${ARGS}"
@@ -33,6 +34,9 @@ do
                 ;;
         --with-elk)
                 WITH_ELK=true
+                ;;
+        --with-ebk)
+                WITH_EBK=true
                 ;;
         --with-yarn)
                 WITH_YARN=true
@@ -54,8 +58,8 @@ echo "WITH_CADVISOR=${WITH_CADVISOR}"
 echo "WITH_YARN=${WITH_YARN}"
 echo "WITH_ELK=${WITH_ELK}"
 echo "WITH_HDFS=${WITH_HDFS}"
-
-
+echo "WITH_ELK=${WITH_ELK}"
+echo "WITH_EBK=${WITH_EBK}"
 
 
 bash -x init-node.sh
@@ -78,7 +82,8 @@ elif [[ ${TYPE} == "swarm" ]]; then
 
     export DIS_URL="consul://127.0.0.1:8500/default"
     bash -x plugins/watchdog/start.sh
-    bash -x plugins/swarm/start.sh  master agent
+    bash -x plugins/tunnel/start.sh 
+    bash -x plugins/swarm/start.sh  master agent portainer
 
 else
     echo  "No such cluster type:${TYPE}"
@@ -88,4 +93,9 @@ fi
 
 if [[ ${WITH_ELK} == true ]]; then
     bash -x plugins/elk/start.sh logspout logstash elasticsearch kibana
+fi
+
+if [[ ${WITH_EBK} == true ]]; then
+    bash -x plugins/elk/start.sh elasticsearch kibana
+    bash -x plugins/beats/start.sh
 fi

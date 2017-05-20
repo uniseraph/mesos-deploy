@@ -11,7 +11,7 @@ Here's a diagram of what the final result will look like:
 
 ## 创建一个mesos集群
 
-在阿里云上创建三台centos7u2的虚拟机，每台都是master兼作worker。
+在阿里云上创建一台centos7u2/7u3虚拟机，作为master兼作worker。
 
 
 ### 准备工作
@@ -19,7 +19,7 @@ Here's a diagram of what the final result will look like:
 在所有机器上执行如下命令 ，安装git和mesos-deploy
 
 ```
-yum install -y git && cd /opt && git clone https://github.com/uniseraph/mesos-deploy.git && cd mesos-deploy 
+yum install -y git && cd /opt && git clone https://github.com/uniseraph/mesos-deploy.git && git checkout singlemaster && cd mesos-deploy
 
 ```
 
@@ -30,29 +30,21 @@ yum install -y git && cd /opt && git clone https://github.com/uniseraph/mesos-de
 export FLANNEL_NETWORK=172.16.0.0/12
 ```
 
+注意FLANNEL_NETWORK不能和虚拟机的网段冲突。
 
 ### 初始化 master 相关服务
 ```
-export MASTER0_IP=xxxx
-export MASTER1_IP=xxxx
-export MASTER2_IP=xxxx
-cd /opt/mesos-deploy && bash setup-master.sh
+export MASTER_IP=xxxx
+cd /opt/mesos-deploy && bash -x setup-master.sh  --with-ebk --type=swarm
 
 ```
-
-
-
-
-
 
 
 ### 初始化 worker相关服务
 ```
 
-export MASTER0_IP=xxxx
-export MASTER1_IP=xxxx
-export MASTER2_IP=xxxx
-cd /opt/mesos-deploy && bash setup-worker.sh
+export MASTER_IP=xxxx
+cd /opt/mesos-deploy && bash setup-worker.sh  --with-ebk --type=swarm
 
 ```
 

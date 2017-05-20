@@ -1,0 +1,38 @@
+metricbeat.modules:
+- module: system
+  metricsets:
+    - cpu
+    - load
+    - memory
+    - network
+    - process
+  enabled: true
+  period: 10s
+  processes: ['.*']
+  cgroups: true  # Remove for versions >= 5.3
+
+# In order to capture short lived connections, use a shorter period for system/sockets.
+- module: system
+  metricsets: [socket]
+  period: 500ms
+  socket.reverse_lookup.enabled: true
+
+- module: system
+  period: 60s
+  metricsets: [filesystem, fsstat]
+  filters:
+    - drop_event.when.regexp.mount_point: '^(/hostfs)?/(sys|cgroup|proc|dev|etc|host|var/lib/docker)($|/)'
+
+- module: docker
+  metricsets: ["container", "cpu", "diskio", "healthcheck","image",  "info", "memory", "network"]
+  hosts: ["unix:///var/run/docker.sock"]
+  enabled: true
+  period: 10s
+
+processors:
+- add_cloud_metadata:
+
+output.elasticsearch:
+  hosts: ["master0:9200","master1:9200","master2:9200"]
+  username: elastic
+  password: changeme

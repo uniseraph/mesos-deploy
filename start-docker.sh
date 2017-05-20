@@ -21,13 +21,13 @@ echo '# /etc/sysconfig/docker-network'  > /etc/sysconfig/docker-network
 echo "DOCKER_NETWORK_OPTIONS=\" -H unix:///var/run/docker.sock -H ${LOCAL_IP}:2376  --dns ${LOCAL_IP}  --ip-masq=${FLANNEL_IPMASQ}  --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}  --registry-mirror=https://rmw18jx4.mirror.aliyuncs.com  \""  >> /etc/sysconfig/docker-network
 
 
-echo 'STORAGE_DRIVER=devicemapper' > /etc/sysconfig/docker-storage-setup
-echo 'DOCKER_STORAGE_OPTIONS="-s devicemapper"' > /etc/sysconfig/docker-storage
+#echo 'STORAGE_DRIVER=devicemapper' > /etc/sysconfig/docker-storage-setup
+#echo 'DOCKER_STORAGE_OPTIONS="-s devicemapper"' > /etc/sysconfig/docker-storage
 
 systemctl start docker
 systemctl status docker -l
 systemctl enable docker
 
-
-
+# for filebeat container
+#chmod -R 755 /var/lib/docker
 

@@ -82,7 +82,7 @@ filebeat.prospectors:
 #-------------------------- Elasticsearch output ------------------------------
 output.elasticsearch:
   # Array of hosts to connect to.
-  hosts: ["master0:9200","master1:9200","master2:9200"]
+  hosts: ["master:9200"]
   #hosts: ["localhost:9200"]
   # Optional protocol and basic auth credentials.
   #protocol: "https"

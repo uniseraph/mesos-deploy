@@ -33,6 +33,6 @@ processors:
 - add_cloud_metadata:
 
 output.elasticsearch:
-  hosts: ["master0:9200","master1:9200","master2:9200"]
+  hosts: ["master:9200"]
   username: elastic
   password: changeme

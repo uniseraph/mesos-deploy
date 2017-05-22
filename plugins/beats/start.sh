@@ -3,8 +3,7 @@
 
 BASE_DIR=$(cd `dirname $0` && pwd -P)
 
-curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.4.0-x86_64.rpm
-rpm -vi filebeat-5.4.0-x86_64.rpm && rm -rf filebeat-5.4.0-x86_64.rpm
+
 
 curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.4.0-amd64.deb
 dpkg -i filebeat-5.4.0-amd64.deb && rm -rf filebeat-5.4.0-amd64.deb

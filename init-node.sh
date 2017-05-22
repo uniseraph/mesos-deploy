@@ -8,7 +8,7 @@ sysctl -w vm.max_map_count=262144
 cp sysctl.conf /etc/sysctl.conf
 sysctl -p
 
-apt-get  install -y docker jq bind-utils bridge-utils tcpdump dnsmasq haveged strace gdb htop sysstat curl wget sysdig  iotop blktrace perf  dstat ltrace lsof glances
+apt-get update && apt-get  install -y docker jq  bridge-utils tcpdump dnsmasq haveged strace gdb htop sysstat curl wget sysdig  iotop blktrace  dstat ltrace lsof glances
 
 systemctl enable haveged
 systemctl restart haveged
@@ -16,7 +16,7 @@ systemctl restart haveged
 cp -f systemd/bootstrap/bootstrap.service /etc/systemd/system/
 cp -f systemd/bootstrap/bootstrap /etc/sysconfig/bootstrap
 
-cp -f systemd/dnsmasq/dnsmasq.service /usr/lib/systemd/system/dnsmasq.service
+#cp -f systemd/dnsmasq/dnsmasq.service /usr/lib/systemd/system/dnsmasq.service
 
 
 tar zxvf binary/docker-1.12.6.tgz && cp -rf docker/* /usr/bin/  && rm -rf docker 

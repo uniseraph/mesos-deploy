@@ -71,7 +71,7 @@ Content-Type: application/json
      "Status": "normal",
      "Nodes": [
           { 
-           "Host": "kvm1",
+           "Node": "kvm1",
            "Uri": "xxxx:2376",
            "kvm1": "10.173.162.72:2376",
            "ID": "6RFS:DK6J:WO6L:RJOM:CCDC:DB7N:SV45:MCUW:6RLO:HBRB:2ABI:2LGA"
@@ -79,10 +79,11 @@ Content-Type: application/json
            "Containers": "14 (12 Running, 0 Paused, 2 Stopped)"
            "Reserved CPUs": "0 / 4"
            "Reserved Memory": "0 B / 3.887 GiB"
-           "Labels":
-             [ "kernelversion":"3.10.0-327.36.3.el7.x86_64", 
+           "Labels":｛ 
+                "kernelversion":"3.10.0-327.36.3.el7.x86_64", 
                "operatingsystem=CentOS Linux 7 (Core)", 
-               "storagedriver=devicemapper" ] ,
+               "storagedriver=devicemapper" 
+           ｝ ,
            UpdatedAt: 2017-05-25T03:13:41Z
            ServerVersion: 1.12.6
            },
@@ -96,25 +97,83 @@ Content-Type: application/json
          "CPUs": "8"
          "Total Memory": "7.775 GiB",
          "IPs": "", //flannel模式下意义不大，ip不是珍稀资源
+         "Discovery": "consul://xxxx/default",
+         "Advertise": "eth0",
+         "Strategy": "spread",
+         "IDC": "idc1",
+         "ASW": "asw1",
+         "RACK": "rack1",
+         "vlans": [
+             "vlan1",
+             "vlan2"
+         ]
      }
     }
 ```
 ### Get pool logs
-
+TODO 目前不需要，没有pool创建过程
 ### 
 
 ## Nodes
 
 ### List Nodes
 ### Import a node to pool
-### 
+### Inspect a node
+查看node信息
+```
+GET /nodes/4fa6e0f0c678/inspect
+```
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+     ID:                     ehkv3bcimagdese79dn78otj5
+     Hostname:               node-1
+     Joined at:              2016-06-16 22:52:44.9910662 +0000 utc
+     State:                 Ready
+     Availability:          Active
+     Operating System:      linux
+     Architecture:          x86_64
+     CPUs:                  2
+     Memory:                1.954 GiB
+     Engine Version:         1.12.0-dev
+     Logging Driver:        json-file
+     Cgroup Driver:         systemd
+     Kernel Version: 3.10.0-327.36.3.el7.x86_64
+     Operating System: CentOS Linux 7 (Core)
+     OSType: linux
+     Architecture: x86_64
+     CPUs: 4
+     Total Memory: 3.702 GiB
+     Name: kvm1
+ID: 6RFS:DK6J:WO6L:RJOM:CCDC:DB7N:SV45:MCUW:6RLO:HBRB:2ABI:2LGA
+Docker Root Dir: /var/lib/docker
+Debug Mode (client): false
+Debug Mode (server): false
+Registry: https://index.docker.io/v1/
+WARNING: bridge-nf-call-iptables is disabled
+WARNING: bridge-nf-call-ip6tables is disabled
+Insecure Registries:
+ 127.0.0.0/8
+}
+```
 
 ## Containers
 
+同SWARM API
+
 ## Images
 
+同SWARM API
+
 ## Misc
+同SWARM API
 
 ## Volumes
 
+同SWARM API
+
 ## Networks
+同SWARM API

@@ -161,8 +161,10 @@ Insecure Registries:
 ```
 
 ## Containers
+### Create a container
+但是需要加一个label ， -l com.zanecloud.omega.pool=pool1 用于指定所在的pool，其他与swarm create container接口一致。
 
-同SWARM API
+docker create -l com.zanecloud.omega.pool=pool1 nginx 
 
 ## Images
 

@@ -23,7 +23,7 @@ services:
     environment:
       - "cluster.name=myelk"
       - "node.name=${ES_NAME}"
-      - "network.host=${LOCAL_IP}"
+      - "network.host=0.0.0.0"
       - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - "discovery.zen.ping.unicast.hosts=${MASTER0_IP},${MASTER1_IP},${MASTER2_IP}"

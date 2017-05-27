@@ -19,7 +19,7 @@ Here's a diagram of what the final result will look like:
 在所有机器上执行如下命令 ，安装git和mesos-deploy
 
 ```
-yum install -y git && cd /opt && git clone https://github.com/uniseraph/mesos-deploy.git && cd mesos-deploy 
+yum install -y git && cd /opt && git clone https://github.com/uniseraph/mesos-deploy.git && cd mesos-deploy
 
 ```
 

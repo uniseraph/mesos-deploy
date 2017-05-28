@@ -26,11 +26,11 @@ systemctl start bootstrap
 systemctl enable bootstrap
 systemctl status bootstrap -l
 
+pip install docker-compose
 
-#pip install docker-compose
-pip install -U pip setuptools
-pip install docker-py
-curl -L https://bit.ly/glances | /bin/bash
+#pip install -U pip setuptools
+#pip install docker-py
+#curl -L https://bit.ly/glances | /bin/bash
 
 #mkdir /etc/glances
 #cp -f systemd/glances/glances.service /etc/systemd/system/

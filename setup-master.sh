@@ -99,10 +99,10 @@ fi
 
 
 if [[ ${WITH_ELK} == true ]]; then
-    bash -x plugins/elk/start.sh logspout logstash elasticsearch kibana
+    bash -x plugins/elk/start.sh logspout logstash  kibana elasticsearch
 fi
 
 if [[ ${WITH_EBK} == true ]]; then
-    bash -x plugins/elk/start.sh elasticsearch kibana
+    bash -x plugins/elk/start.sh  kibana elasticsearch
     bash -x plugins/beats/start.sh
 fi

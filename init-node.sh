@@ -26,6 +26,7 @@ systemctl start bootstrap
 systemctl enable bootstrap
 systemctl status bootstrap -l
 
+pip install --upgrade pip
 pip install docker-compose
 
 #pip install -U pip setuptools

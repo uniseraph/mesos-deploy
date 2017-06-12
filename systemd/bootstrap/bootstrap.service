@@ -2,7 +2,7 @@
 Description=Docker Application Container Engine
 Documentation=http://docs.docker.com
 After=network.target
-Requires=docker-cleanup.timer
+Requires=bootstrap-cleanup.timer
 
 [Service]
 Type=notify

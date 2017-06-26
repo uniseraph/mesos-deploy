@@ -14,6 +14,7 @@ systemctl enable haveged
 systemctl restart haveged
 
 cp -f systemd/bootstrap/bootstrap.service /etc/systemd/system/
+cp -f systemd/bootstrap/bootstrap-cleanup.timer /etc/systemd/system/
 cp -f systemd/bootstrap/bootstrap /etc/sysconfig/bootstrap
 
 cp -f systemd/dnsmasq/dnsmasq.service /usr/lib/systemd/system/dnsmasq.service

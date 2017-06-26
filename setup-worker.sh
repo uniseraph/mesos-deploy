@@ -84,6 +84,10 @@ elif [[ ${TYPE} == "swarm" ]]; then
 
     bash -x plugins/swarm/start.sh agent
     bash -x plugins/watchdog/start.sh
+elif [[ ${TYPE} == "kubernetes" ]]; then
+
+    bash -x plugins/kubernetes/start-worker.sh
+
 
 else
     echo  "No such cluster type:${TYPE}"

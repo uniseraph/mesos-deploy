@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "net.ipv4.conf.eth0.rp_filter=0" > /etc/sysctl.d/omega.conf
+echo "net.ipv4.etc.eth0.rp_filter=0" > /etc/sysctl.d/omega.conf
 
 sysctl -w net.ipv4.conf.eth0.rp_filter=0
 sysctl -w vm.max_map_count=262144
@@ -35,7 +35,7 @@ pip install docker-compose
 
 #mkdir /etc/glances
 #cp -f systemd/glances/glances.service /etc/systemd/system/
-#cp -f systemd/glances/glances.conf  /etc/glances/glances.conf
+#cp -f systemd/glances/glances.etc  /etc/glances/glances.etc
 
 #systemctl start dnsmasq
 #systemctl status dnsmasq -l

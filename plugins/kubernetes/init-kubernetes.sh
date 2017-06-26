@@ -14,7 +14,11 @@ cd kubernetes && ./cluster/get-kube-binaries.sh
 cd server
 tar xvf kubernetes-server-linux-amd64.tar.gz
 
-cp kubernetes/server/bin/kube-*  /usr/bin
+cp kubernetes/server/bin/kube-apiserver  /usr/bin
+cp kubernetes/server/bin/kube-sheduler  /usr/bin
+cp kubernetes/server/bin/kube-controller-manager  /usr/bin
+cp kubernetes/server/bin/kube-proxy  /usr/bin
+
 cp kubernetes/server/bin/kubelet /usr/bin
 cp kubernetes/server/bin/kubectl /usr/bin
 

@@ -17,4 +17,4 @@ KUBELET_API_SERVER="--api-servers=http://master0:8080"
 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
 #
 ## Add your own!
-KUBELET_ARGS=""
+KUBELET_ARGS="--cgroup-driver systemd"

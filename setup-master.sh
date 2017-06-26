@@ -95,6 +95,7 @@ elif [[ ${TYPE} == "kubernetes" ]]; then
     bash -x start-bootstrap.sh  etcd  dnsmasq flanneld consul-server  && \
     bash -x start-docker.sh
 
+     bash -x plugins/kubernetes/init-kubernetes.sh
   #  bash -x plugins/kubernetes/start-master.sh
   #  bash -x plugins/kubernetes/start-worker.sh
 

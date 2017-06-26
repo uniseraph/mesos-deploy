@@ -15,7 +15,7 @@ cd server
 tar xvf kubernetes-server-linux-amd64.tar.gz
 
 cp kubernetes/server/bin/kube-apiserver  /usr/bin
-cp kubernetes/server/bin/kube-sheduler  /usr/bin
+cp kubernetes/server/bin/kube-scheduler  /usr/bin
 cp kubernetes/server/bin/kube-controller-manager  /usr/bin
 cp kubernetes/server/bin/kube-proxy  /usr/bin
 
@@ -32,15 +32,15 @@ cp systemd/kubernetes/service/* /usr/lib/systemd/system/
 
 
 sed -i -e "s#master0#${MASTER0_IP}#g" /etc/kubernetes/config
-sed -i -e "s#master0#${MASTER1_IP}#g" /etc/kubernetes/config
-sed -i -e "s#master0#${MASTER2_IP}#g" /etc/kubernetes/config
+sed -i -e "s#master1#${MASTER1_IP}#g" /etc/kubernetes/config
+sed -i -e "s#master2#${MASTER2_IP}#g" /etc/kubernetes/config
 
 
 sed -i -e "s#master0#${MASTER0_IP}#g" /etc/kubernetes/apiserver
-sed -i -e "s#master0#${MASTER1_IP}#g" /etc/kubernetes/apiserver
-sed -i -e "s#master0#${MASTER2_IP}#g" /etc/kubernetes/apiserver
+sed -i -e "s#master1#${MASTER1_IP}#g" /etc/kubernetes/apiserver
+sed -i -e "s#master2#${MASTER2_IP}#g" /etc/kubernetes/apiserver
 
 
 sed -i -e "s#master0#${MASTER0_IP}#g" /etc/kubernetes/kubelet
-sed -i -e "s#master0#${MASTER1_IP}#g" /etc/kubernetes/kubelet
-sed -i -e "s#master0#${MASTER2_IP}#g" /etc/kubernetes/kubelet
+sed -i -e "s#master1#${MASTER1_IP}#g" /etc/kubernetes/kubelet
+sed -i -e "s#master2#${MASTER2_IP}#g" /etc/kubernetes/kubelet

@@ -10,7 +10,7 @@ cd /tmp/kubernetes
 
 wget https://github.com/kubernetes/kubernetes/releases/download/v1.6.3/kubernetes.tar.gz
 tar zxvf kubernetes.tar.gz
-./cluster/get-kube-binaries.sh
+cd kubernetes && ./cluster/get-kube-binaries.sh
 cd server
 tar xvf kubernetes-server-linux-amd64.tar.gz
 

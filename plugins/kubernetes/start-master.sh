@@ -2,5 +2,5 @@
 
 
 
-systemctl enable kube-apiserver kube-controller-manager kube-scheduler kubelet kube-proxy
-systemctl restart kube-apiserver kube-controller-manager kube-scheduler kubelet kube-proxy
+systemctl enable kube-apiserver kube-controller-manager kube-scheduler kubelet
+systemctl restart kube-apiserver kube-controller-manager kube-scheduler kubelet

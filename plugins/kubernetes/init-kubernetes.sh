@@ -29,3 +29,18 @@ cd ${CUR_DIR}
 mkdir -p /etc/kubernetes
 cp systemd/kubernetes/etc/* /etc/kubernetes/
 cp systemd/kubernetes/service/* /usr/lib/systemd/system/
+
+
+sed -i -e "s#master0#${MASTER0_IP}#g" /etc/kubernetes/config
+sed -i -e "s#master0#${MASTER1_IP}#g" /etc/kubernetes/config
+sed -i -e "s#master0#${MASTER2_IP}#g" /etc/kubernetes/config
+
+
+sed -i -e "s#master0#${MASTER0_IP}#g" /etc/kubernetes/apiserver
+sed -i -e "s#master0#${MASTER1_IP}#g" /etc/kubernetes/apiserver
+sed -i -e "s#master0#${MASTER2_IP}#g" /etc/kubernetes/apiserver
+
+
+sed -i -e "s#master0#${MASTER0_IP}#g" /etc/kubernetes/kubelet
+sed -i -e "s#master0#${MASTER1_IP}#g" /etc/kubernetes/kubelet
+sed -i -e "s#master0#${MASTER2_IP}#g" /etc/kubernetes/kubelet

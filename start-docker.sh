@@ -22,7 +22,7 @@ echo "DOCKER_NETWORK_OPTIONS=\" -H unix:///var/run/docker.sock -H ${LOCAL_IP}:23
 
 
 #echo 'STORAGE_DRIVER=devicemapper' > /etc/sysconfig/docker-storage-setup
-#echo 'DOCKER_STORAGE_OPTIONS="-s devicemapper"' > /etc/sysconfig/docker-storage
+echo 'DOCKER_STORAGE_OPTIONS="-s overlay"' > /etc/sysconfig/docker-storage
 
 systemctl start docker
 systemctl status docker -l

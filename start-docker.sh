@@ -14,7 +14,7 @@ source /run/flannel/subnet.env
 
 LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
 
-#systemctl stop docker
+systemctl stop docker
 
 sed -i  's/--log-driver=journald/--log-driver=json-file --log-opt max-file=10 --log-opt max-size=100m/g' /etc/sysconfig/docker
 echo '# /etc/sysconfig/docker-network'  > /etc/sysconfig/docker-network

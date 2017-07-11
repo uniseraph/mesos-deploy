@@ -8,8 +8,9 @@ sysctl -w vm.max_map_count=262144
 cp sysctl.conf /etc/sysctl.conf
 sysctl -p
 
-yum install -y docker jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat curl wget sysdig pidstat mpstat iotop blktrace perf  dstat ltrace lsof
+yum install -y  jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat curl wget sysdig pidstat mpstat iotop blktrace perf  dstat ltrace lsof
 
+rpm -i binary/docker-1.12.6-1.el7.centos.x86_64.rpm
 systemctl enable haveged
 systemctl restart haveged
 
@@ -20,7 +21,7 @@ cp -f systemd/bootstrap/bootstrap /etc/sysconfig/bootstrap
 cp -f systemd/dnsmasq/dnsmasq.service /usr/lib/systemd/system/dnsmasq.service
 
 
-tar zxvf binary/docker-1.12.6.tgz && cp -rf docker/* /usr/bin/  && rm -rf docker 
+#tar zxvf binary/docker-1.12.6.tgz && cp -rf docker/* /usr/bin/  && rm -rf docker
 
 systemctl daemon-reload
 systemctl start bootstrap

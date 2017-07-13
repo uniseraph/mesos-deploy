@@ -2,7 +2,7 @@ version: '2'
 
 services:
  watchdog:
-  image: registry.cn-hangzhou.aliyuncs.com/zanecloud/matad:0.1.0
+  image: registry.cn-hangzhou.aliyuncs.com/zanecloud/metad:0.1.0
   restart: always
   network_mode: host
   ports:

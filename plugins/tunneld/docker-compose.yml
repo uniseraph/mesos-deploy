@@ -11,4 +11,3 @@ services:
   labels:
    - com.zanecloud.omega.labels.system=true
   command: --debug true
-yu

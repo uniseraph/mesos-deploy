@@ -31,7 +31,7 @@ BOOTSTRAP_EXPECT=${BOOTSTRAP_EXPECT:-3}
 FLANNEL_NETWORK=${FLANNEL_NETWORK:-"192.168.0.0/16"}
 
 
-docker -H unix:///var/run/bootstrap.sock run -ti --rm -v $(pwd):$(pwd) \
+docker -H unix:///var/run/bootstrap.sock run --net=host -ti --rm -v $(pwd):$(pwd) \
 	    -v /var/run/bootstrap.sock:/var/run/bootstrap.sock \
         -v /usr/bin/docker:/usr/bin/docker \
         -e DOCKER_HOST=unix:///var/run/bootstrap.sock  \

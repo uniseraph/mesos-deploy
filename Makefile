@@ -10,6 +10,6 @@ BUILD_TIME = $(shell date --rfc-3339 ns 2>/dev/null | sed -e 's/ /T/')
 
 build:
 	echo ${GITCOMMIT} > GITCOMMIT
-	tar zcvf ~/mesos-deploy.tar.gz ..
+	tar zcvf ~/mesos-deploy.tar.gz .
 
 .PHONY: build

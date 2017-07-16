@@ -11,11 +11,12 @@ sysctl -p
 yum install -y  jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat curl wget sysdig pidstat mpstat iotop blktrace perf  dstat ltrace lsof
 
 rpm -i binary/zanecloud-docker-1.11.1-d349391.x86_64.rpmß
-systemctl enable haveged
-systemctl restart haveged
+#systemctl enable haveged
+#systemctl restart haveged
 
 cp -f systemd/bootstrap/bootstrap.service /etc/systemd/system/
-cp -f systemd/bootstrap/bootstrap-cleanup.timer /etc/systemd/system/
+cp -f systemd/bootstrap/bootstrap.socket /etc/systemd/system/
+#cp -f systemd/bootstrap/bootstrap-cleanup.timer /etc/systemd/system/
 cp -f systemd/bootstrap/bootstrap /etc/sysconfig/bootstrap
 
 cp -f systemd/dnsmasq/dnsmasq.service /usr/lib/systemd/system/dnsmasq.service
@@ -28,8 +29,8 @@ systemctl start bootstrap
 systemctl enable bootstrap
 systemctl status bootstrap -l
 
-pip install --upgrade pip
-pip install docker-compose
+#pip install --upgrade pip
+#pip install docker-compose
 
 #pip install -U pip setuptools
 #pip install docker-py

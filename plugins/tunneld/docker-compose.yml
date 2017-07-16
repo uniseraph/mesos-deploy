@@ -1,7 +1,7 @@
 version: '2'
 
 services:
- tunnel:
+ tunneld:
   image: registry.cn-hangzhou.aliyuncs.com/zanecloud/tunneld:0.1.0
   restart: always
   network_mode: host

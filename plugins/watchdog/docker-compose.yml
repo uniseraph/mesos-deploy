@@ -14,4 +14,4 @@ services:
   environment:
    - "affinity:container!=*watchdog*"
    - DOCKER_HOST=unix:///var/run/docker.sock
-  command: --log-level=debug -m name consul://${LOCAL_IP}:8500
+  command: --log-level=debug -m compose consul://${LOCAL_IP}:8500

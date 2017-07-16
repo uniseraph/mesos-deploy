@@ -87,12 +87,11 @@ if [[ ${TYPE} == "mesos" ]]; then
 elif [[ ${TYPE} == "swarm" ]]; then
     bash -x start-bootstrap.sh  etcd  dnsmasq flanneld consul-server  && \
     bash -x start-docker.sh
-
-    export DIS_URL="consul://127.0.0.1:8500/default"
-    bash -x plugins/watchdog/start.sh
+    DIS_URL="consul://127.0.0.1:8500/default" bash -x plugins/watchdog/start.sh
     bash -x plugins/tunneld/start.sh
     bash -x plugins/metad/start.sh
-    bash -x plugins/swarm/start.sh  master agent
+    DIS_URL="consul://127.0.0.1:8500/default" bash -x plugins/swarm/start.sh  master agent
+
 elif [[ ${TYPE} == "kubernetes" ]]; then
     bash -x start-bootstrap.sh  etcd  dnsmasq flanneld consul-server  && \
     bash -x start-docker.sh

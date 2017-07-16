@@ -10,7 +10,7 @@ sysctl -p
 
 yum install -y  jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat curl wget sysdig pidstat mpstat iotop blktrace perf  dstat ltrace lsof
 
-rpm -i binary/zanecloud-docker-1.11.1-d349391.x86_64.rpmß
+rpm -i binary/zanecloud-docker-1.11.1-d349391.x86_64.rpm
 #systemctl enable haveged
 #systemctl restart haveged
 

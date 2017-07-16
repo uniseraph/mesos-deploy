@@ -7,7 +7,7 @@ services:
   network_mode: host
   pid: host
   environment:
-   - DOCKER_HOST=tcp://${LOCAL_HOST}:2375
+   - DOCKER_HOST=tcp://${LOCAL_IP}:2375
   labels:
    - com.zanecloud.omega.labels.system=true
   command: --debug true

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
+#LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
+LOCAL_IP=$(ifconfig eth0 | grep inet\ addr | awk '{print $2}' | awk -F: '{print $2}')
 
 #HOST_IP=${HOST_IP:-$LOCAL_IP}
 

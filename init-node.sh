@@ -24,8 +24,8 @@ wget http://zanecloud-docker.oss-cn-shanghai.aliyuncs.com/1.11.1/d349391/docker-
 
 cd ..
 sudo chmod +x d349391/*
+sudo mv d349391/docker-1.11 d349391/docker
 sudo cp -f  d349391/* /usr/bin/
-sudo rm -rf /usr/bin/docker &&  sudo  ln -s /usr/bin/docker-1.11.1 /usr/bin/docker
 
 
 sudo mkdir -p /etc/sysconfig

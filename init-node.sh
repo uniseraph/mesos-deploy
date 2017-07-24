@@ -16,7 +16,7 @@ apt-get update && apt-get install -y jq  bridge-utils tcpdump dnsmasq haveged st
 #systemctl restart haveged
 
 rm -rf d349391 && mkdir -p d349391 && cd d349391
-wget http://zanecloud-docker.oss-cn-shanghai.aliyuncs.com/1.11.1/d349391/docker-1.11.1
+wget http://zanecloud-docker.oss-cn-shanghai.aliyuncs.com/1.11.1/d349391/docker-1.11.1   -O docker
 wget http://zanecloud-docker.oss-cn-shanghai.aliyuncs.com/1.11.1/d349391/docker-containerd
 wget http://zanecloud-docker.oss-cn-shanghai.aliyuncs.com/1.11.1/d349391/docker-containerd-ctr
 wget http://zanecloud-docker.oss-cn-shanghai.aliyuncs.com/1.11.1/d349391/docker-containerd-shim
@@ -24,7 +24,6 @@ wget http://zanecloud-docker.oss-cn-shanghai.aliyuncs.com/1.11.1/d349391/docker-
 
 cd ..
 sudo chmod +x d349391/*
-sudo mv d349391/docker-1.11 d349391/docker
 sudo cp -f  d349391/* /usr/bin/
 
 

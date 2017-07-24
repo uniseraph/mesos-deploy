@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 
-LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
+#LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
+LOCAL_IP=$(ifconfig eth0 | grep inet\ addr | awk '{print $2}' | awk -F: '{print $2}')
 
 #HOST_IP=${HOST_IP:-$LOCAL_IP}
 ZK_URL=${ZK_URL:-"zk://${MASTER0_IP}:2181,${MASTER1_IP}:2181,${MASTER2_IP}:2181"}

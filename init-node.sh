@@ -41,6 +41,7 @@ cp -f systemd/bootstrap/bootstrap /etc/sysconfig/bootstrap
 
 
 systemctl daemon-reload
+systemctl restart docker
 systemctl restart bootstrap
 systemctl enable bootstrap
 

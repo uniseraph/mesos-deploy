@@ -23,12 +23,12 @@ wget http://zanecloud-docker.oss-cn-shanghai.aliyuncs.com/1.11.1/d349391/docker-
 wget http://zanecloud-docker.oss-cn-shanghai.aliyuncs.com/1.11.1/d349391/docker-runc
 
 cd ..
+sudo chmod +x d349391/*
 sudo cp -f  d349391/* /usr/bin/
-sudo chmod +x /usr/bin/*
-ln -s /usr/bin/docker-1.11.1 /usr/bin/docker
+sudo rm -rf /usr/bin/docker &&  sudo  ln -s /usr/bin/docker-1.11.1 /usr/bin/docker
 
 
-
+sudo mkdir -p /etc/sysconfig
 cp -f systemd/docker-1.11/docker.service /etc/systemd/system/
 cp -f systemd/docker-1.11/docker.socket /etc/systemd/system/
 

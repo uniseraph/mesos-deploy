@@ -9,7 +9,7 @@ cp sysctl.conf /etc/sysctl.conf
 sysctl -p
 
 #yum install -y  jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat curl wget sysdig pidstat mpstat iotop blktrace perf  dstat ltrace lsof
-apt-get update && apt-get install -y jq  bridge-utils tcpdump dnsmasq haveged strace pstack htop  curl wget  iotop blktrace   dstat ltrace lsof
+apt-get update && apt-get install -y jq  bridge-utils tcpdump  haveged strace pstack htop  curl wget  iotop blktrace   dstat ltrace lsof
 
 #rpm -i binary/zanecloud-docker-1.11.1-d349391.x86_64.rpm
 #systemctl enable haveged

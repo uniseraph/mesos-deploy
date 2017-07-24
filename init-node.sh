@@ -41,7 +41,6 @@ cp -f systemd/bootstrap/bootstrap /etc/sysconfig/bootstrap
 
 
 systemctl daemon-reload
-systemctl start bootstrap
+systemctl restart bootstrap
 systemctl enable bootstrap
-systemctl status bootstrap -l
 

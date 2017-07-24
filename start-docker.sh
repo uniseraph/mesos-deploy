@@ -28,8 +28,8 @@ iptables -t nat  -A POSTROUTING -o eth0 -s ${FLANNEL_SUBNET}  -j MASQUERADE
 #echo 'STORAGE_DRIVER=devicemapper' > /etc/sysconfig/docker-storage-setup
 #echo 'DOCKER_STORAGE_OPTIONS="-s overlay"' > /etc/sysconfig/docker-storage
 
-systemctl start docker
-systemctl status docker -l
+systemctl restart docker
+#systemctl status docker -l
 systemctl enable docker
 
 # for filebeat container

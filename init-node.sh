@@ -11,10 +11,6 @@ sysctl -p
 #yum install -y  jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat curl wget sysdig pidstat mpstat iotop blktrace perf  dstat ltrace lsof
 apt-get update && apt-get install -y jq  bridge-utils tcpdump  haveged strace pstack htop  curl wget  iotop blktrace   dstat ltrace lsof
 
-#rpm -i binary/zanecloud-docker-1.11.1-d349391.x86_64.rpm
-#systemctl enable haveged
-#systemctl restart haveged
-
 rm -rf d349391 && mkdir -p d349391 && cd d349391
 wget http://zanecloud-docker.oss-cn-shanghai.aliyuncs.com/1.11.1/d349391/docker-1.11.1 -q  -O docker
 wget http://zanecloud-docker.oss-cn-shanghai.aliyuncs.com/1.11.1/d349391/docker-containerd -q

@@ -91,8 +91,9 @@ elif [[ ${TYPE} == "swarm" ]]; then
     bash -x start-docker.sh
 
     bash -x plugins/watchdog/start.sh
-    bash -x plugins/tunneld/start.sh
     bash -x plugins/metad/start.sh
+    bash -x plugins/tunneld/start.sh
+
     DIS_URL="consul://127.0.0.1:8500/default" bash -x plugins/swarm/start.sh  master agent
 
 elif [[ ${TYPE} == "kubernetes" ]]; then

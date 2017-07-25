@@ -15,3 +15,13 @@ docker run --net=host -ti --rm \
         -w ${BASE_DIR} \
         docker/compose:1.9.0 \
         up -d $*
+
+
+PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
+
+
+cp -f plugins/tunneld/tunneld-service.json.template plugins/tunneld/tunneld-service.json
+
+sed -i -e "s#localhost#${PUBLIC_IP}#g" plugins/tunneld/tunneld-service.json
+
+curl -H "Content-Type: application/json" -X POST -d @plugins/tunneld/tunneld-service.json http://${LOCAL_IP}:6400/services/create

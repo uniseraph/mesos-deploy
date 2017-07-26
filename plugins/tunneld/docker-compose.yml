@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+ tunneld:
+  image: registry.cn-hangzhou.aliyuncs.com/zanecloud/tunneld:0.1.0-81e006c
+  restart: always
+  network_mode: host
+  pid: host
+  environment:
+   - DOCKER_HOST=tcp://127.0.0.1:2375
+   - ZANE_AUDIT_HOST=${API_SERVER}
+  labels:
+   - com.zanecloud.omega.labels.system=true
+  command: --debug  --noauth

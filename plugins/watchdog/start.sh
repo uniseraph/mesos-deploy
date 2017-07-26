@@ -2,8 +2,6 @@
 
 BASE_DIR=$(cd `dirname $0` && pwd -P)
 
-#LOCAL_IP=$(ifconfig eth0 | grep inet\ addr | awk '{print $2}' | awk -F: '{print $2}')
-
 docker run --net=host -ti --rm \
         -v ${BASE_DIR}:${BASE_DIR} \
 	    -v /var/run/docker.sock:/var/run/docker.sock \

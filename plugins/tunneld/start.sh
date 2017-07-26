@@ -14,15 +14,11 @@ docker run --net=host -ti --rm \
 
 if [[ ${PROVIDER} == "aws" ]]; then
     PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
-#elif  [[ ${PROVIDER} == "aliyun" ]]; then
-#    PUBLIC_IP=$(curl http://100.100.100.200/latest/meta-data/public-ipv4)
+elif  [[ ${PROVIDER} == "aliyun" ]]; then
+    PUBLIC_IP=$(curl http://100.100.100.200/latest/meta-data/eipv4)
 else
-    if [[ -z ${TUNNELD_PUBLICIP} ]]; then
-        echo "Please export TUNNELD_PUBLICIP in your env"
-        exit 1
-    fi
-    PUBLIC_IP=${TUNNELD_PUBLICIP}
-
+   echo "no such provider ${PROVIDER}"
+    exit
 fi
 
 cp -f plugins/tunneld/tunneld-service.json.template plugins/tunneld/tunneld-service.json

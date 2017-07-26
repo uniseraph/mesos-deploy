@@ -16,6 +16,12 @@ if [[ -z ${MASTER2_IP} ]]; then
     exit 1
 fi
 
+if [[ -z ${PROVIDER} ]]; then
+    echo "using default provider:aliyun"
+    export PROVIDER="aliyun"
+fi
+
+
 
 TYPE=mesos
 WITH_CADVISOR=false

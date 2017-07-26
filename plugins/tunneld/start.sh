@@ -12,9 +12,17 @@ docker run --net=host -ti --rm \
         docker/compose:1.9.0 \
         up -d $*
 
+if [[ ${PROVIDER} == "aws" ]]; then
+    PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
+#elif  [[ ${PROVIDER} == "aliyun" ]]; then
+#    PUBLIC_IP=$(curl http://100.100.100.200/latest/meta-data/public-ipv4)
+else
+    if [[ -z ${TUNNELD_PUBLICIP} ]]; then
+        echo "Please export TUNNELD_PUBLICIP in your env"
+        exit 1
+    fi
 
-PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
-
+fi
 
 cp -f plugins/tunneld/tunneld-service.json.template plugins/tunneld/tunneld-service.json
 

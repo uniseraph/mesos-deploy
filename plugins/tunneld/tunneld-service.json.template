@@ -2,6 +2,6 @@
   "Name": "tunneld",
   "Tags": [],
   "Address": "localhost",
-  "Port": 8000,
+  "Port": 2022,
   "EnableTagOverride": false
 }

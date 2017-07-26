@@ -16,6 +16,7 @@ ExecStart=/usr/bin/docker daemon -H unix:///var/run/bootstrap.sock \
           --iptables=false \
           --ip-masq=false \
           --bridge=none \
+          -s overlay \
           --graph=/var/lib/bootstrap \
           --exec-root=/var/run/bootstrap  \
           $BOOTSTRAP_OPTS

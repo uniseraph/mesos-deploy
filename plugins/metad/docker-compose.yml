@@ -12,4 +12,4 @@ services:
    - com.zanecloud.container.plugin=true
   environment:
    - "affinity:container!=*metad*"
-  command: --log-level=debug start --consul-addr 127.0.0.1:8500 --addr ${LOCAL_IP}:6400
+  command: --log-level=debug start --consul-addr 127.0.0.1:8500 --addr 0.0.0.0:6400

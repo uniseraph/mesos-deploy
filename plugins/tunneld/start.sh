@@ -21,6 +21,7 @@ else
         echo "Please export TUNNELD_PUBLICIP in your env"
         exit 1
     fi
+    PUBLIC_IP=${TUNNELD_PUBLICIP}
 
 fi
 

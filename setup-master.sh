@@ -79,8 +79,6 @@ if [[ ${TYPE} == "mesos" ]]; then
 
     bash -x start-mesos.sh master slave
 
-    LOCAL_IP=$(ifconfig eth0 | grep inet\ addr | awk '{print $2}' | awk -F: '{print $2}')
-
     if [[ ${LOCAL_IP} == ${MASTER0_IP} ]]; then
         bash -x start-mesos.sh marathon mesos-consul
         echo "marathon starting success ......, Please access http://${LOCAL_IP}:8080"
@@ -93,13 +91,13 @@ elif [[ ${TYPE} == "swarm" ]]; then
     bash -x plugins/metad/start.sh
     bash -x plugins/tunneld/start.sh
 
-    DIS_URL="consul://127.0.0.1:8500/default" bash -x plugins/swarm/start.sh  master agent
+    bash -x plugins/swarm/start.sh  master agent
 
 elif [[ ${TYPE} == "kubernetes" ]]; then
     bash -x start-bootstrap.sh  etcd  dnsmasq flanneld consul-server  && \
     bash -x start-docker.sh
 
-  #   bash -x plugins/kubernetes/init-kubernetes.sh
+  #  bash -x plugins/kubernetes/init-kubernetes.sh
   #  bash -x plugins/kubernetes/start-master.sh
   #  bash -x plugins/kubernetes/start-worker.sh
 

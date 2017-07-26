@@ -9,7 +9,7 @@ services:
   pid: host
   labels:
    - com.github.omega.labels.system=true
-  command: manage --host ${LOCAL_IP}:2375 ${DIS_URL}
+  command: manage --host 0.0.0.0:2375 ${DIS_URL}
  agent:
   image: swarm:1.2.6
   #image: registry.cn-hangzhou.aliyuncs.com/omega-reg/swarm:1.2.4

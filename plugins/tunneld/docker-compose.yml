@@ -7,7 +7,7 @@ services:
   network_mode: host
   pid: host
   environment:
-   - DOCKER_HOST=tcp://${LOCAL_IP}:2375
+   - DOCKER_HOST=tcp://127.0.0.1:2375
    - ZANE_AUDIT_HOST=${API_SERVER}
   labels:
    - com.zanecloud.omega.labels.system=true

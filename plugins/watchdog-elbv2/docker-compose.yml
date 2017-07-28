@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+ watchdog:
+  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/watchdog:0.2.0-9686ad5
+  restart: always
+  network_mode: host
+  privileged: true
+  pid: host
+  volumes:
+   - /var/run/docker.sock:/var/run/docker.sock
+  labels:
+   - com.github.omega.labels.system=true
+  environment:
+   - "affinity:container!=*watchdog*"
+   - DOCKER_HOST=unix:///var/run/docker.sock
+   - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+   - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+  command: --log-level=debug  elbv2://${REGION}

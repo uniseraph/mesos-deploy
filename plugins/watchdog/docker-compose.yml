@@ -2,7 +2,7 @@ version: '2'
 
 services:
  watchdog:
-  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/watchdog:0.1.0-1ca1a1b
+  image: registry.cn-hangzhou.aliyuncs.com/omega-reg/watchdog:0.1.0-4231679
   restart: always
   network_mode: host
   privileged: true

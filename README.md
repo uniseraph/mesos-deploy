@@ -19,7 +19,7 @@ Here's a diagram of what the final result will look like:
 在所有机器上执行如下命令 ，安装git和mesos-deploy
 
 ```
-yum install -y git && cd /opt && git clone https://github.com/uniseraph/mesos-deploy.git && cd mesos-deploy && git checkout aws
+yum install -y git && cd /opt && git clone https://github.com/uniseraph/mesos-deploy.git && cd mesos-deploy 
 
 ```
 
@@ -33,10 +33,7 @@ export FLANNEL_NETWORK=172.16.0.0/12
 
 ### 初始化 master 相关服务
 ```
-export MASTER0_IP=xxxx
-export MASTER1_IP=xxxx
-export MASTER2_IP=xxxx
-cd /opt/mesos-deploy && bash -x setup-master.sh  --with-ebk --type=swarm
+cd /opt/mesos-deploy && MASTER0_IP=xxxx MASTER1_IP=xxxx MASTER2_IP=xxxx PROVIDER=aliyun API_SERVER=tcp://xxxx:8080 bash -x setup-master.sh   --type=swarm
 
 ```
 
@@ -52,14 +49,17 @@ cd /opt/mesos-deploy && bash -x setup-master.sh  --with-ebk --type=swarm
 export MASTER0_IP=xxxx
 export MASTER1_IP=xxxx
 export MASTER2_IP=xxxx
+export PROVIDER=aliyun
 cd /opt/mesos-deploy && bash setup-worker.sh
 
 ```
 
 
 ##  验证
+ 
+### 创建一个nginx app(swarm)
 
-### 创建一个nginx app
+### 创建一个nginx app (mesos)
 
 ```
 curl  -H 'Content-Type: application/json' -d @nginx.json  kvm1:8080/v2/apps

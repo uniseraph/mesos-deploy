@@ -33,12 +33,7 @@ export FLANNEL_NETWORK=172.16.0.0/12
 
 ### 初始化 master 相关服务
 ```
-export MASTER0_IP=xxxx
-export MASTER1_IP=xxxx
-export MASTER2_IP=xxxx
-export PROVIDER=aliyun
-export API_SERVER=tcp://xxxx:8080 
-cd /opt/mesos-deploy && bash -x setup-master.sh   --type=swarm
+cd /opt/mesos-deploy && MASTER0_IP=xxxx MASTER1_IP=xxxx MASTER2_IP=xxxx PROVIDER=aliyun API_SERVER=tcp://xxxx:8080 bash -x setup-master.sh   --type=swarm
 
 ```
 
@@ -61,6 +56,8 @@ cd /opt/mesos-deploy && bash setup-worker.sh
 
 
 ##  验证
+ 
+### 创建一个nginx app(swarm)
 
 ### 创建一个nginx app (mesos)
 

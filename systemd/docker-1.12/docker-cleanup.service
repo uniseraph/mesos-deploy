@@ -1,0 +1,11 @@
+[Unit]
+Description=Docker Cleanup
+Requires=docker.service
+
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/sh -c "DEAD=`docker ps -aq -f status=dead` && [ -n \"$DEAD\" ] && docker rm $DEAD; exit 0"
+
+[Install]
+WantedBy=multi-user.target

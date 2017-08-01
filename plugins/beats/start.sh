@@ -10,6 +10,7 @@ rpm -vi filebeat-5.4.0-x86_64.rpm && rm -rf filebeat-5.4.0-x86_64.rpm
 
 cp ${BASE_DIR}/filebeat/config/filebeat.yml /etc/filebeat/filebeat.yml
 sed -i -e "s#master#${MASTER_IP}#g" /etc/filebeat/filebeat.yml
+
 systemctl restart filebeat
 systemctl enable filebeat
 systemctl status filebeat
@@ -25,3 +26,4 @@ systemctl status metricbeat
 
 /usr/share/filebeat/scripts/import_dashboards -es http://${MASTER_IP}:9200
 /usr/share/metricbeat/scripts/import_dashboards -es http://${MASTER_IP}:9200
+

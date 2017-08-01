@@ -8,6 +8,12 @@ fi
 
 
 
+if [[ -z ${PROVIDER} ]]; then
+    echo "using default provider:aliyun"
+    export PROVIDER="aliyun"
+fi
+
+
 
 TYPE=mesos
 WITH_CADVISOR=false
@@ -66,6 +72,23 @@ echo "WITH_ELK=${WITH_ELK}"
 echo "WITH_EBK=${WITH_EBK}"
 
 
+if type apt-get >/dev/null 2>&1; then
+  echo 'using apt-get '
+  sudo apt-get update && apt-get install -y jq  bridge-utils tcpdump  haveged strace pstack htop  curl wget  iotop blktrace   dstat ltrace lsof
+  export LOCAL_IP=$(ifconfig eth0 | grep inet\ addr | awk '{print $2}' | awk -F: '{print $2}')
+
+elif type yum >/dev/nul 2>&1; then
+  echo 'using yum'
+  sudo yum install -y  jq bind-utils bridge-utils tcpdump  haveged strace pstack htop iostat vmstat curl wget sysdig pidstat mpstat iotop blktrace perf  dstat ltrace lsof
+
+  export LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}' )
+
+else
+  echo "no apt-get and no yum, exit"
+  exit
+fi
+
+
 bash -x init-node.sh  && \
     bash -x start-bootstrap.sh  dnsmasq flanneld consul-agent  && \
     bash -x start-docker.sh
@@ -80,6 +103,10 @@ elif [[ ${TYPE} == "swarm" ]]; then
 
     bash -x plugins/swarm/start.sh agent
     bash -x plugins/watchdog/start.sh
+elif [[ ${TYPE} == "kubernetes" ]]; then
+
+    bash -x plugins/kubernetes/start-worker.sh
+
 
 else
     echo  "No such cluster type:${TYPE}"

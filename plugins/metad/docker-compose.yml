@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+ metad:
+  image: registry.cn-hangzhou.aliyuncs.com/zanecloud/metad:0.1.0
+  restart: always
+  network_mode: host
+  ports:
+   - 2022:2022
+  pid: host
+  labels:
+   - com.zanecloud.container.plugin=true
+  environment:
+   - "affinity:container!=*metad*"
+  command: --log-level=debug start --consul-addr 127.0.0.1:8500 --addr 0.0.0.0:6400

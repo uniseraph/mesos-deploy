@@ -64,6 +64,22 @@ echo "WITH_ELK=${WITH_ELK}"
 echo "WITH_EBK=${WITH_EBK}"
 
 
+if type apt-get >/dev/null 2>&1; then
+  echo 'using apt-get '
+  sudo apt-get update && apt-get install -y git jq  bridge-utils tcpdump  haveged strace pstack htop  curl wget  iotop blktrace   dstat ltrace lsof
+  export LOCAL_IP=$(ifconfig eth0 | grep inet\ addr | awk '{print $2}' | awk -F: '{print $2}')
+
+elif type yum >/dev/nul 2>&1; then
+  echo 'using yum'
+  sudo yum install -y git jq bind-utils bridge-utils tcpdump dnsmasq haveged strace pstack htop iostat vmstat curl wget sysdig pidstat mpstat iotop blktrace perf  dstat ltrace lsof
+  export LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}' )
+
+else
+  echo "no apt-get and no yum, exit"
+  exit
+fi
+
+
 bash -x init-node.sh
 
 if [[ ${TYPE} == "mesos" ]]; then
@@ -82,10 +98,19 @@ elif [[ ${TYPE} == "swarm" ]]; then
     bash -x start-bootstrap.sh  etcd  dnsmasq flanneld consul-server  && \
     bash -x start-docker.sh
 
-    export DIS_URL="consul://127.0.0.1:8500/default"
     bash -x plugins/watchdog/start.sh
-    bash -x plugins/tunnel/start.sh 
-    bash -x plugins/swarm/start.sh  master agent portainer
+    bash -x plugins/metad/start.sh
+    bash -x plugins/tunneld/start.sh
+
+    bash -x plugins/swarm/start.sh  master agent
+
+elif [[ ${TYPE} == "kubernetes" ]]; then
+    bash -x start-bootstrap.sh  etcd  dnsmasq flanneld consul-server  && \
+    bash -x start-docker.sh
+
+  #  bash -x plugins/kubernetes/init-kubernetes.sh
+  #  bash -x plugins/kubernetes/start-master.sh
+  #  bash -x plugins/kubernetes/start-worker.sh
 
 else
     echo  "No such cluster type:${TYPE}"
@@ -94,10 +119,10 @@ fi
 
 
 if [[ ${WITH_ELK} == true ]]; then
-    bash -x plugins/elk/start.sh logspout logstash elasticsearch kibana
+    bash -x plugins/elk/start.sh logspout logstash  kibana elasticsearch
 fi
 
 if [[ ${WITH_EBK} == true ]]; then
-    bash -x plugins/elk/start.sh elasticsearch kibana
+    bash -x plugins/elk/start.sh  kibana elasticsearch
     bash -x plugins/beats/start.sh
 fi

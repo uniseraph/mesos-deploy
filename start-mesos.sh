@@ -2,7 +2,7 @@
 
 
 
-LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
+#LOCAL_IP=$(ifconfig eth0 | grep inet\ addr | awk '{print $2}' | awk -F: '{print $2}')
 
 
 ZK_URL=${ZK_URL:-"zk://${MASTER_IP}:2181"}

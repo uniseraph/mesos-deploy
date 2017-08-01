@@ -2,15 +2,9 @@
 
 BASE_DIR=$(cd `dirname $0` && pwd -P)
 
+DIS_URL=${DIS_URL:-"consul://127.0.0.1:8500/default"}
 
-LOCAL_IP=$(ifconfig eth0 | grep inet | awk '{{print $2}}')
-
-
-
-
-HOSTNAME=`hostname`
-
-docker run -ti --rm \
+docker run --net=host -ti --rm \
         -v ${BASE_DIR}:${BASE_DIR} \
 	    -v /var/run/docker.sock:/var/run/docker.sock \
         -e DOCKER_HOST=unix:///var/run/docker.sock  \

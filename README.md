@@ -19,6 +19,7 @@ Here's a diagram of what the final result will look like:
 ```
 yum install -y git glances && cd /opt && git clone https://github.com/uniseraph/mesos-deploy.git  && cd mesos-deploy && git checkout singlemaster
 
+
 ```
 
 #### 初始化flannel网络端
@@ -32,8 +33,8 @@ export FLANNEL_NETWORK=172.16.0.0/12
 
 #### 初始化 master 相关服务
 ```
-export MASTER_IP=xxxx
-cd /opt/mesos-deploy && bash -x setup-master.sh  --with-ebk --type=swarm
+
+cd /opt/mesos-deploy && MASTER_IP=xxxx PROVIDER=aliyun API_SERVER=tcp://xxxx:8080 bash -x setup-master.sh   --type=swarm
 
 ```
 
@@ -53,14 +54,15 @@ yum install -y git glances && cd /opt && git clone https://github.com/uniseraph/
 #### 安装并加入集群
 
 ```
+cd /opt/mesos-deploy && MASTER_IP=xxxx PROVIDER=aliyun API_SERVER=tcp://xxxx:8080 bash -x setup-worker.sh   --type=swarm
 
-export MASTER_IP=xxxx
-cd /opt/mesos-deploy && bash setup-worker.sh  --with-ebk --type=swarm
 
 ```
 
 
 ##  验证
+ gi
+### 创建一个nginx app(swarm)
 
 
 ### 容器集群管理

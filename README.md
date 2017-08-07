@@ -55,4 +55,9 @@ export PROVIDER=aliyun
 cd /opt/mesos-deploy && bash setup-worker.sh
 ```
 
-      
+## 其他
+
+### bridge container ping host
+在阿里云经典网络中，阿里云会对VM发出的icmp包进行源mac/源ip校验，所以如果是以bridge模式启动的容器ping宿主机不通。
+
+VPC不存在类似问题。

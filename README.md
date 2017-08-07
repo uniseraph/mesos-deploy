@@ -62,6 +62,7 @@ cd /opt/mesos-deploy && bash setup-worker.sh
 节点需要访问公网，有两种方式配置节点出公网：
 
 （1）如果节点数较少，建议每个节点直接分配一个公网IP；
+
 （2）如果节点数很多，不能做到每个节点一个公网IP，建议配置SNAT网关；
 
 ### 入方向
@@ -71,6 +72,7 @@ cd /opt/mesos-deploy && bash setup-worker.sh
 #### 定向给API服务器授权
 
 （1）2375端口：管理API端口；
+
 （2）6400端口：元数据管理端口；
 如果API服务器与master节点在同一个集群，这不需要做API定向授权。
 

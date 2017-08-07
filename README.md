@@ -74,7 +74,8 @@ cd /opt/mesos-deploy && bash setup-worker.sh
 （1）2375端口：管理API端口；
 
 （2）6400端口：元数据管理端口；
-如果API服务器与master节点在同一个集群，这不需要做API定向授权。
+
+如果API服务器与master节点在同一个集群，则不需要做API定向授权。
 
 #### 特定服务定向授权
 

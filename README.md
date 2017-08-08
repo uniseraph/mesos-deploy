@@ -1,4 +1,4 @@
-## 创建一个mesos集群
+## 创建一个Docker集群
 
 在阿里云上创建三台centos7u2的虚拟机，每台都是master兼作worker。
 
@@ -6,7 +6,7 @@
 
 ### 准备工作
 
-在所有机器上执行如下命令 ，安装git和mesos-deploy
+在所有机器上执行如下命令，安装git和mesos-deploy
 
 ```
 yum install -y git && cd /opt && git clone https://github.com/uniseraph/mesos-deploy.git && cd mesos-deploy 
@@ -26,10 +26,11 @@ export FLANNEL_NETWORK=172.16.0.0/12
 ### 初始化 master 相关服务
 
 ```
-cd /opt/mesos-deploy && MASTER0_IP=xxxx MASTER1_IP=xxxx MASTER2_IP=xxxx PROVIDER=aliyun API_SERVER=tcp://xxxx:8080 bash -x setup-master.sh   --type=swarm
+cd /opt/mesos-deploy && MASTER0_IP=xxxx MASTER1_IP=xxxx MASTER2_IP=xxxx PROVIDER=aliyun API_SERVER=tcp://xxxx:8080 bash -x setup-master.sh  --type=swarm
 ```
 
-以上IP均为VM的内网IP。
+以上MASTERx_IP均为VM的内网IP，API_SERVER的IP是公网IP（如果Docker集群与API服务器在同一个集群，则也可以使用私网IP）。
+
 注意：由于三台master需要互相组网，所以以上命令请在三台机器上并发执行。
 
 
@@ -43,6 +44,8 @@ export MASTER2_IP=xxxx
 export PROVIDER=aliyun
 cd /opt/mesos-deploy && bash setup-worker.sh
 ```
+
+以上MASTERx_IP均为VM的内网IP。
 
 如果集群中只有master没有worker，此步骤忽略。
 

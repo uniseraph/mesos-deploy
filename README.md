@@ -1,17 +1,7 @@
-# mesos-deploy
-
-This is a repository of community maintained Mesos cluster deployment
-automations.
-
-
-## 架构
-
-Here's a diagram of what the final result will look like:
-![Mesos Single Master Node on Docker](mesos.png)
-
 ## 创建一个mesos集群
 
 在阿里云上创建三台centos7u2的虚拟机，每台都是master兼作worker。
+
 
 
 ### 准备工作
@@ -20,8 +10,8 @@ Here's a diagram of what the final result will look like:
 
 ```
 yum install -y git && cd /opt && git clone https://github.com/uniseraph/mesos-deploy.git && cd mesos-deploy 
-
 ```
+
 
 
 ### 初始化flannel网络端
@@ -37,7 +27,6 @@ export FLANNEL_NETWORK=172.16.0.0/12
 
 ```
 cd /opt/mesos-deploy && MASTER0_IP=xxxx MASTER1_IP=xxxx MASTER2_IP=xxxx PROVIDER=aliyun API_SERVER=tcp://xxxx:8080 bash -x setup-master.sh   --type=swarm
-
 ```
 
 以上IP均为VM的内网IP。
@@ -54,6 +43,10 @@ export MASTER2_IP=xxxx
 export PROVIDER=aliyun
 cd /opt/mesos-deploy && bash setup-worker.sh
 ```
+
+如果集群中只有master没有worker，此步骤忽略。
+
+
 
 ## 安全策略
 
@@ -80,6 +73,8 @@ cd /opt/mesos-deploy && bash setup-worker.sh
 #### 特定服务定向授权
 
 （1）2022端口：SSH服务端口。建议只给指定IP（比如跳板机）授权。
+
+
 
 ## 其他
 

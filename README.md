@@ -1,4 +1,4 @@
-## 创建一个Docker集群
+## 新建集群
 
 在阿里云上创建三台centos7u2的虚拟机，每台都是master兼作worker。
 
@@ -34,15 +34,15 @@ cd /opt/mesos-deploy && MASTER0_IP=xxxx MASTER1_IP=xxxx MASTER2_IP=xxxx PROVIDER
 注意：由于三台master需要互相组网，所以以上命令请在三台机器上并发执行。
 
 
+到此一个三节点的Zanecloud集群搭建成功。
+
+
+## 扩容集群
 
 ### 初始化 worker相关服务
 
 ```
-export MASTER0_IP=xxxx
-export MASTER1_IP=xxxx
-export MASTER2_IP=xxxx
-export PROVIDER=aliyun
-cd /opt/mesos-deploy && bash setup-worker.sh
+cd /opt/mesos-deploy && MASTER0_IP=xxxx MASTER1_IP=xxxx MASTER2_IP=xxxx PROVIDER=aliyun  bash setup-worker.sh --type=swarm
 ```
 
 以上MASTERx_IP均为VM的内网IP。
